@@ -1399,75 +1399,7 @@ Client                Django API              Database
             <div class="diagram-container">
                 <img src="img1.png" alt="">
                 
-                <details>
-                    <summary><strong>PlantUML Code for ERD</strong></summary>
-                    <div class="plantuml-code">@startuml
-!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
-!define primary_key(x) <b>x</b>
-!define foreign_key(x) <i>x</i>
-
-hide methods
-hide stereotypes
-
-Table(users, "users") {
-  primary_key(id): INTEGER
-  username: VARCHAR(150)
-  email: VARCHAR(254)
-  password_hash: VARCHAR(128)
-  first_name: VARCHAR(30)
-  last_name: VARCHAR(150)
-  is_active: BOOLEAN
-  is_staff: BOOLEAN
-  date_joined: TIMESTAMP
-  last_login: TIMESTAMP
-}
-
-Table(groups, "groups") {
-  primary_key(id): INTEGER
-  name: VARCHAR(100)
-  description: TEXT
-  foreign_key(created_by): INTEGER
-  created_at: TIMESTAMP
-  updated_at: TIMESTAMP
-}
-
-Table(group_members, "group_members") {
-  primary_key(id): INTEGER
-  foreign_key(group_id): INTEGER
-  foreign_key(user_id): INTEGER
-  joined_at: TIMESTAMP
-  is_admin: BOOLEAN
-}
-
-Table(messages, "messages") {
-  primary_key(id): INTEGER
-  foreign_key(group_id): INTEGER
-  foreign_key(sender_id): INTEGER
-  foreign_key(recipient_id): INTEGER
-  message_type: VARCHAR(20)
-  content: TEXT
-  created_at: TIMESTAMP
-  is_deleted: BOOLEAN
-}
-
-Table(active_connections, "active_connections") {
-  primary_key(id): INTEGER
-  foreign_key(user_id): INTEGER
-  connection_id: VARCHAR(100)
-  connected_at: TIMESTAMP
-  last_ping: TIMESTAMP
-}
-
-users ||--o{ groups : "creates"
-users ||--o{ group_members : "belongs to"
-groups ||--o{ group_members : "has"
-users ||--o{ messages : "sends"
-messages }o--|| groups : "posted in"
-messages }o--o| users : "recipient"
-users ||--o{ active_connections : "has"
-
-@enduml</div>
-                </details>
+               
             </div>
 
             <h3>Table Definitions</h3>
