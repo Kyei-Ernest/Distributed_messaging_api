@@ -4,442 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Distributed Messaging Application - Complete Documentation</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1e40af;
-            --secondary: #64748b;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --light: #f8fafc;
-            --dark: #0f172a;
-            --border: #e2e8f0;
-            --code-bg: #1e293b;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--dark);
-            background: var(--light);
-        }
-
-        nav {
-            background: var(--dark);
-            color: white;
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            flex-wrap: wrap;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 4rem 2rem;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        section {
-            background: white;
-            margin: 2rem 0;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        h2 {
-            color: var(--primary);
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 3px solid var(--primary);
-        }
-
-        h3 {
-            color: var(--secondary);
-            font-size: 1.5rem;
-            margin: 2rem 0 1rem 0;
-        }
-
-        h4 {
-            color: var(--dark);
-            font-size: 1.2rem;
-            margin: 1.5rem 0 0.5rem 0;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin: 0.25rem;
-        }
-
-        .badge-success { background: var(--success); color: white; }
-        .badge-primary { background: var(--primary); color: white; }
-        .badge-warning { background: var(--warning); color: white; }
-        .badge-danger { background: var(--danger); color: white; }
-
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .card {
-            background: var(--light);
-            padding: 1.5rem;
-            border-radius: 8px;
-            border-left: 4px solid var(--primary);
-        }
-
-        .card h4 {
-            margin-top: 0;
-        }
-
-        pre {
-            background: var(--code-bg);
-            color: #e2e8f0;
-            padding: 1.5rem;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 1rem 0;
-            font-size: 0.9rem;
-        }
-
-        code {
-            font-family: 'Courier New', monospace;
-            background: var(--light);
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
-            color: var(--danger);
-        }
-
-        pre code {
-            background: transparent;
-            color: #e2e8f0;
-        }
-
-        .diagram-container {
-            background: var(--light);
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            padding: 2rem;
-            margin: 2rem 0;
-        }
-
-        .diagram-placeholder {
-            background: white;
-            border: 2px dashed var(--border);
-            border-radius: 8px;
-            padding: 2rem;
-            margin: 1rem 0;
-            min-height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--secondary);
-        }
-
-        .plantuml-code {
-            background: var(--code-bg);
-            color: #e2e8f0;
-            padding: 1.5rem;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 1rem 0;
-            font-size: 0.85rem;
-            font-family: 'Courier New', monospace;
-            white-space: pre;
-        }
-
-        .architecture-ascii {
-            background: white;
-            border: 2px solid var(--border);
-            padding: 2rem;
-            border-radius: 8px;
-            font-family: monospace;
-            white-space: pre;
-            overflow-x: auto;
-            line-height: 1.4;
-            color: var(--dark);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-        }
-
-        th, td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-        }
-
-        th {
-            background: var(--light);
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        tr:hover {
-            background: var(--light);
-        }
-
-        ul, ol {
-            margin: 1rem 0 1rem 2rem;
-        }
-
-        li {
-            margin: 0.5rem 0;
-        }
-
-        .alert {
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-            border-left: 4px solid;
-        }
-
-        .alert-info {
-            background: #dbeafe;
-            border-color: var(--primary);
-            color: var(--primary-dark);
-        }
-
-        .alert-success {
-            background: #d1fae5;
-            border-color: var(--success);
-            color: #065f46;
-        }
-
-        .alert-warning {
-            background: #fef3c7;
-            border-color: var(--warning);
-            color: #92400e;
-        }
-
-        .alert-danger {
-            background: #fee2e2;
-            border-color: var(--danger);
-            color: #991b1b;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .feature-item {
-            text-align: center;
-            padding: 2rem;
-            background: var(--light);
-            border-radius: 8px;
-            transition: transform 0.3s;
-        }
-
-        .feature-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .command-box {
-            background: var(--code-bg);
-            color: #10b981;
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            margin: 1rem 0;
-            position: relative;
-        }
-
-        .command-box::before {
-            content: '$ ';
-            color: #3b82f6;
-        }
-
-        footer {
-            background: var(--dark);
-            color: white;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
-        }
-
-        .table-wrapper {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .nav-toggle {
-            display: none;
-            font-size: 1.8rem;
-            cursor: pointer;
-            color: white;
-        }
-
-        .endpoint-box {
-            background: var(--light);
-            border-left: 4px solid var(--primary);
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 4px;
-        }
-
-        .method-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 0.875rem;
-            margin-right: 0.5rem;
-        }
-
-        .method-get { background: #10b981; color: white; }
-        .method-post { background: #3b82f6; color: white; }
-        .method-put { background: #f59e0b; color: white; }
-        .method-delete { background: #ef4444; color: white; }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .nav-toggle {
-                display: block;
-            }
-
-            .nav-links {
-                width: 100%;
-                display: none;
-                flex-direction: column;
-                margin-top: 1rem;
-            }
-
-            .nav-links.show {
-                display: flex;
-            }
-
-            .nav-links li {
-                padding: 0.5rem 0;
-                border-top: 1px solid rgba(255,255,255,0.1);
-            }
-
-            h2 {
-                font-size: 1.6rem;
-            }
-
-            h3 {
-                font-size: 1.3rem;
-            }
-
-            section {
-                padding: 1.5rem 1rem;
-            }
-
-            .container {
-                padding: 1rem;
-            }
-
-            .card-grid, .feature-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-
-        /* ---------- Flexible Image Handling ---------- */
-        .diagram-container {
-            max-width: 100%;
-            overflow-x: auto;
-        }
-
-        .diagram-container img {
-            max-width: 100%;
-            height: auto;
-            object-fit: contain;
-            display: block;
-            margin: 0 auto;
-        }
-
-        @media (max-width: 768px) {
-            .diagram-container {
-                padding: 1rem;
-            }
-
-            .diagram-container img {
-                max-height: 70vh;
-            }
-        }
-
-    </style>
-</head>
+    <link rel="stylesheet" href="style.css"></head>
 <body>
     <nav>
         <div class="nav-container">
@@ -1607,7 +1172,7 @@ ON active_connections(user_id);</pre>
             <div class="diagram-container">
                 <img src="uml1.png"></img>
                 
-            
+                
             </div>
 
             <h3>2. Use Case Diagram</h3>
@@ -1625,7 +1190,7 @@ ON active_connections(user_id);</pre>
             <h3>4. Sequence Diagram: Private Message (Unicast)</h3>
             <div class="diagram-container">
                 <img src="sequence_diagram2.png"></img>
-               
+                
             </div>
 
             <h3>5. Sequence Diagram: Join Group</h3>
@@ -1649,6 +1214,1762 @@ ON active_connections(user_id);</pre>
             <h3>8. Component Diagram</h3>
             <div class="diagram-container">
                                  <img src="component_diagram1.png"></img>
-                                
+                                 
             </div>
         </section>
+
+        <div class="container">
+        
+        <section id="examples">
+            <h2>💻 Code Examples</h2>
+            
+            <h3>Frontend Integration</h3>
+
+            <h4>JavaScript WebSocket Client</h4>
+            <pre>
+class MessagingClient {
+    constructor(token, userId) {
+        this.token = token;
+        this.userId = userId;
+        this.ws = null;
+        this.reconnectAttempts = 0;
+        this.maxReconnectAttempts = 5;
+    }
+
+    connect() {
+        const wsUrl = `ws://localhost:8080/ws?token=${this.token}&user_id=${this.userId}`;
+        this.ws = new WebSocket(wsUrl);
+
+        this.ws.onopen = () => {
+            console.log('WebSocket connected');
+            this.reconnectAttempts = 0;
+        };
+
+        this.ws.onmessage = (event) => {
+            const message = JSON.parse(event.data);
+            this.handleMessage(message);
+        };
+
+        this.ws.onerror = (error) => {
+            console.error('WebSocket error:', error);
+        };
+
+        this.ws.onclose = () => {
+            console.log('WebSocket closed');
+            this.reconnect();
+        };
+    }
+
+    handleMessage(message) {
+        switch(message.type) {
+            case 'group_message':
+                this.onGroupMessage(message.data);
+                break;
+            case 'private_message':
+                this.onPrivateMessage(message.data);
+                break;
+            case 'user_joined':
+                this.onUserJoined(message.data);
+                break;
+            case 'user_left':
+                this.onUserLeft(message.data);
+                break;
+            case 'ping':
+                this.send({ type: 'pong' });
+                break;
+        }
+    }
+
+    send(data) {
+        if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+            this.ws.send(JSON.stringify(data));
+        }
+    }
+
+    reconnect() {
+        if (this.reconnectAttempts < this.maxReconnectAttempts) {
+            this.reconnectAttempts++;
+            const delay = Math.min(1000 * Math.pow(2, this.reconnectAttempts), 30000);
+            console.log(`Reconnecting in ${delay}ms...`);
+            setTimeout(() => this.connect(), delay);
+        }
+    }
+
+    disconnect() {
+        if (this.ws) {
+            this.ws.close();
+        }
+    }
+
+    // Event handlers to be overridden
+    onGroupMessage(data) {}
+    onPrivateMessage(data) {}
+    onUserJoined(data) {}
+    onUserLeft(data) {}
+}
+
+// Usage
+const client = new MessagingClient(accessToken, userId);
+
+client.onGroupMessage = (data) => {
+    console.log('Group message:', data);
+    displayMessage(data);
+};
+
+client.onPrivateMessage = (data) => {
+    console.log('Private message:', data);
+    displayPrivateMessage(data);
+};
+
+client.connect();
+</pre>
+
+            <h4>Send Message via REST API</h4>
+            <pre>
+async function sendGroupMessage(groupId, content) {
+    const response = await fetch('http://localhost:8000/api/messages/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+        },
+        body: JSON.stringify({
+            group: groupId,
+            message_type: 'group',
+            content: content
+        })
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to send message');
+    }
+
+    return await response.json();
+}
+
+async function sendPrivateMessage(groupId, recipientId, content) {
+    const response = await fetch('http://localhost:8000/api/messages/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+        },
+        body: JSON.stringify({
+            group: groupId,
+            recipient: recipientId,
+            message_type: 'private',
+            content: content
+        })
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to send private message');
+    }
+
+    return await response.json();
+}
+</pre>
+
+            <h3>Backend Examples</h3>
+
+            <h4>Django: Message Publishing</h4>
+            <pre>
+# views.py
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Message, Group
+from .serializers import MessageSerializer
+import redis
+import json
+
+redis_client = redis.Redis(host='localhost', port=6379, decode_responses=True)
+
+class MessageCreateView(APIView):
+    def post(self, request):
+        serializer = MessageSerializer(data=request.data)
+        
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Validate group membership
+        group = serializer.validated_data['group']
+        if not group.members.filter(id=request.user.id).exists():
+            return Response(
+                {'error': 'Not a member of this group'}, 
+                status=status.HTTP_403_FORBIDDEN
+            )
+        
+        # Save message
+        message = serializer.save(sender=request.user)
+        
+        # Publish to Redis
+        if message.message_type == 'group':
+            channel = f'group:{group.id}:messages'
+        else:
+            channel = f'user:{message.recipient.id}:messages'
+        
+        redis_message = {
+            'type': f'{message.message_type}_message',
+            'data': {
+                'message_id': message.id,
+                'group_id': group.id,
+                'sender_id': request.user.id,
+                'sender_username': request.user.username,
+                'content': message.content,
+                'timestamp': message.created_at.isoformat()
+            }
+        }
+        
+        if message.message_type == 'private':
+            redis_message['data']['recipient_id'] = message.recipient.id
+        
+        redis_client.publish(channel, json.dumps(redis_message))
+        
+        return Response(
+            MessageSerializer(message).data, 
+            status=status.HTTP_201_CREATED
+        )
+</pre>
+
+            <h4>Go: WebSocket Handler</h4>
+            <pre>
+// main.go
+package main
+
+import (
+    "encoding/json"
+    "log"
+    "net/http"
+    "sync"
+    "github.com/gorilla/websocket"
+    "github.com/go-redis/redis/v8"
+)
+
+type Hub struct {
+    clients      map[int]*Client
+    register     chan *Client
+    unregister   chan *Client
+    broadcast    chan []byte
+    mutex        sync.RWMutex
+    redisClient  *redis.Client
+}
+
+type Client struct {
+    hub      *Hub
+    conn     *websocket.Conn
+    send     chan []byte
+    userID   int
+    username string
+    groupID  int
+}
+
+func newHub(redisClient *redis.Client) *Hub {
+    return &Hub{
+        clients:     make(map[int]*Client),
+        register:    make(chan *Client),
+        unregister:  make(chan *Client),
+        broadcast:   make(chan []byte),
+        redisClient: redisClient,
+    }
+}
+
+func (h *Hub) run() {
+    for {
+        select {
+        case client := <-h.register:
+            h.mutex.Lock()
+            h.clients[client.userID] = client
+            h.mutex.Unlock()
+            
+            // Notify others of join
+            h.notifyUserJoined(client)
+            
+        case client := <-h.unregister:
+            h.mutex.Lock()
+            if _, ok := h.clients[client.userID]; ok {
+                delete(h.clients, client.userID)
+                close(client.send)
+            }
+            h.mutex.Unlock()
+            
+            // Notify others of leave
+            h.notifyUserLeft(client)
+        }
+    }
+}
+
+func (h *Hub) notifyUserJoined(client *Client) {
+    message := map[string]interface{}{
+        "type": "user_joined",
+        "data": map[string]interface{}{
+            "user_id":  client.userID,
+            "username": client.username,
+            "group_id": client.groupID,
+        },
+    }
+    
+    data, _ := json.Marshal(message)
+    h.broadcastToGroup(client.groupID, data)
+}
+
+func (h *Hub) notifyUserLeft(client *Client) {
+    message := map[string]interface{}{
+        "type": "user_left",
+        "data": map[string]interface{}{
+            "user_id":  client.userID,
+            "username": client.username,
+            "group_id": client.groupID,
+        },
+    }
+    
+    data, _ := json.Marshal(message)
+    h.broadcastToGroup(client.groupID, data)
+}
+
+func (h *Hub) broadcastToGroup(groupID int, message []byte) {
+    h.mutex.RLock()
+    defer h.mutex.RUnlock()
+    
+    for _, client := range h.clients {
+        if client.groupID == groupID {
+            select {
+            case client.send <- message:
+            default:
+                close(client.send)
+                delete(h.clients, client.userID)
+            }
+        }
+    }
+}
+
+func (c *Client) readPump() {
+    defer func() {
+        c.hub.unregister <- c
+        c.conn.Close()
+    }()
+    
+    for {
+        _, message, err := c.conn.ReadMessage()
+        if err != nil {
+            break
+        }
+        
+        // Handle incoming messages (like pong responses)
+        var msg map[string]interface{}
+        json.Unmarshal(message, &msg)
+        
+        if msg["type"] == "pong" {
+            // Update last activity timestamp
+        }
+    }
+}
+
+func (c *Client) writePump() {
+    defer c.conn.Close()
+    
+    for {
+        select {
+        case message, ok := <-c.send:
+            if !ok {
+                c.conn.WriteMessage(websocket.CloseMessage, []byte{})
+                return
+            }
+            
+            if err := c.conn.WriteMessage(websocket.TextMessage, message); err != nil {
+                return
+            }
+        }
+    }
+}
+</pre>
+
+            <h3>Python Client Example</h3>
+            <pre>
+import asyncio
+import websockets
+import requests
+import json
+
+class MessagingClient:
+    def __init__(self, base_url, ws_url):
+        self.base_url = base_url
+        self.ws_url = ws_url
+        self.token = None
+        self.user_id = None
+        
+    def login(self, username, password):
+        response = requests.post(
+            f'{self.base_url}/api/auth/login/',
+            json={'username': username, 'password': password}
+        )
+        
+        if response.status_code == 200:
+            data = response.json()
+            self.token = data['access_token']
+            self.user_id = data['user']['id']
+            return True
+        return False
+    
+    def create_group(self, name, description):
+        response = requests.post(
+            f'{self.base_url}/api/groups/',
+            headers={'Authorization': f'Bearer {self.token}'},
+            json={'name': name, 'description': description}
+        )
+        return response.json()
+    
+    def send_message(self, group_id, content, message_type='group', recipient_id=None):
+        data = {
+            'group': group_id,
+            'content': content,
+            'message_type': message_type
+        }
+        
+        if recipient_id:
+            data['recipient'] = recipient_id
+        
+        response = requests.post(
+            f'{self.base_url}/api/messages/',
+            headers={'Authorization': f'Bearer {self.token}'},
+            json=data
+        )
+        return response.json()
+    
+    async def connect_websocket(self, group_id):
+        uri = f'{self.ws_url}/ws?token={self.token}&user_id={self.user_id}'
+        
+        async with websockets.connect(uri) as websocket:
+            print(f"Connected to WebSocket")
+            
+            async for message in websocket:
+                data = json.loads(message)
+                await self.handle_message(data)
+    
+    async def handle_message(self, data):
+        msg_type = data.get('type')
+        
+        if msg_type == 'group_message':
+            print(f"Group message from {data['data']['sender_username']}: {data['data']['content']}")
+        elif msg_type == 'private_message':
+            print(f"Private message from {data['data']['sender_username']}: {data['data']['content']}")
+        elif msg_type == 'user_joined':
+            print(f"{data['data']['username']} joined the group")
+        elif msg_type == 'user_left':
+            print(f"{data['data']['username']} left the group")
+
+# Usage
+async def main():
+    client = MessagingClient('http://localhost:8000', 'ws://localhost:8080')
+    
+    # Login
+    if client.login('john_doe', 'password123'):
+        print("Logged in successfully")
+        
+        # Create group
+        group = client.create_group('Test Group', 'Testing')
+        print(f"Created group: {group['name']}")
+        
+        # Send message
+        msg = client.send_message(group['id'], 'Hello everyone!')
+        print(f"Sent message: {msg['id']}")
+        
+        # Connect to WebSocket
+        await client.connect_websocket(group['id'])
+
+if __name__ == '__main__':
+    asyncio.run(main())
+</pre>
+        </section>
+
+        <section id="testing">
+            <h2>🧪 Testing</h2>
+            
+            <h3>Unit Tests</h3>
+
+            <h4>Django Tests</h4>
+            <pre>
+# tests/test_messages.py
+from django.test import TestCase
+from django.contrib.auth import get_user_model
+from messaging.models import Group, Message, Membership
+
+User = get_user_model()
+
+class MessageTestCase(TestCase):
+    def setUp(self):
+        self.user1 = User.objects.create_user(
+            username='user1',
+            password='testpass123'
+        )
+        self.user2 = User.objects.create_user(
+            username='user2',
+            password='testpass123'
+        )
+        
+        self.group = Group.objects.create(
+            name='Test Group',
+            created_by=self.user1
+        )
+        
+        Membership.objects.create(user=self.user1, group=self.group)
+        Membership.objects.create(user=self.user2, group=self.group)
+    
+    def test_create_group_message(self):
+        message = Message.objects.create(
+            group=self.group,
+            sender=self.user1,
+            message_type='group',
+            content='Test message'
+        )
+        
+        self.assertEqual(message.group, self.group)
+        self.assertEqual(message.sender, self.user1)
+        self.assertIsNone(message.recipient)
+    
+    def test_create_private_message(self):
+        message = Message.objects.create(
+            group=self.group,
+            sender=self.user1,
+            recipient=self.user2,
+            message_type='private',
+            content='Private test'
+        )
+        
+        self.assertEqual(message.recipient, self.user2)
+        self.assertEqual(message.message_type, 'private')
+    
+    def test_group_membership_required(self):
+        user3 = User.objects.create_user(
+            username='user3',
+            password='testpass123'
+        )
+        
+        # user3 is not a member
+        is_member = Membership.objects.filter(
+            user=user3,
+            group=self.group
+        ).exists()
+        
+        self.assertFalse(is_member)
+</pre>
+
+            <h4>API Integration Tests</h4>
+            <pre>
+# tests/test_api.py
+from rest_framework.test import APITestCase
+from rest_framework import status
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
+class MessageAPITestCase(APITestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username='testuser',
+            password='testpass123'
+        )
+        
+        # Login and get token
+        response = self.client.post('/api/auth/login/', {
+            'username': 'testuser',
+            'password': 'testpass123'
+        })
+        self.token = response.data['access_token']
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.token}')
+    
+    def test_create_group(self):
+        response = self.client.post('/api/groups/', {
+            'name': 'API Test Group',
+            'description': 'Testing via API'
+        })
+        
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data['name'], 'API Test Group')
+    
+    def test_send_group_message(self):
+        # Create group first
+        group_response = self.client.post('/api/groups/', {
+            'name': 'Test Group',
+            'description': 'Test'
+        })
+        group_id = group_response.data['id']
+        
+        # Send message
+        response = self.client.post('/api/messages/', {
+            'group': group_id,
+            'message_type': 'group',
+            'content': 'Test message'
+        })
+        
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data['content'], 'Test message')
+    
+    def test_unauthorized_access(self):
+        self.client.credentials()  # Remove credentials
+        
+        response = self.client.get('/api/groups/')
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+</pre>
+
+            <h3>Load Testing</h3>
+
+            <h4>Using Locust</h4>
+            <pre>
+# locustfile.py
+from locust import HttpUser, task, between
+import json
+
+class MessagingUser(HttpUser):
+    wait_time = between(1, 3)
+    
+    def on_start(self):
+        # Login
+        response = self.client.post('/api/auth/login/', json={
+            'username': 'testuser',
+            'password': 'testpass123'
+        })
+        
+        self.token = response.json()['access_token']
+        self.headers = {'Authorization': f'Bearer {self.token}'}
+        
+        # Create or join group
+        response = self.client.post('/api/groups/', 
+            headers=self.headers,
+            json={'name': 'Load Test Group', 'description': 'Testing'}
+        )
+        self.group_id = response.json()['id']
+    
+    @task(3)
+    def send_message(self):
+        self.client.post('/api/messages/',
+            headers=self.headers,
+            json={
+                'group': self.group_id,
+                'message_type': 'group',
+                'content': 'Load test message'
+            }
+        )
+    
+    @task(1)
+    def get_messages(self):
+        self.client.get(f'/api/messages/?group={self.group_id}',
+            headers=self.headers
+        )
+    
+    @task(1)
+    def get_groups(self):
+        self.client.get('/api/groups/',
+            headers=self.headers
+        )
+</pre>
+
+            <div class="command-box">locust -f locustfile.py --host=http://localhost:8000</div>
+
+            <h3>WebSocket Testing</h3>
+            <pre>
+# test_websocket.py
+import asyncio
+import websockets
+import json
+
+async def test_websocket():
+    # Assume we have a valid token
+    token = "your_jwt_token_here"
+    user_id = 1
+    
+    uri = f"ws://localhost:8080/ws?token={token}&user_id={user_id}"
+    
+    async with websockets.connect(uri) as websocket:
+        print("Connected to WebSocket")
+        
+        # Wait for messages
+        try:
+            while True:
+                message = await asyncio.wait_for(websocket.recv(), timeout=30)
+                data = json.loads(message)
+                print(f"Received: {data['type']}")
+                
+                # Respond to ping
+                if data['type'] == 'ping':
+                    await websocket.send(json.dumps({'type': 'pong'}))
+                    print("Sent pong")
+                    
+        except asyncio.TimeoutError:
+            print("No messages received in 30 seconds")
+        except Exception as e:
+            print(f"Error: {e}")
+
+if __name__ == '__main__':
+    asyncio.run(test_websocket())
+</pre>
+
+            <h3>Test Coverage Commands</h3>
+            <div class="command-box">pytest --cov=messaging --cov-report=html</div>
+            <div class="command-box">coverage run --source='.' manage.py test</div>
+            <div class="command-box">coverage report</div>
+        </section>
+
+        <section id="errors">
+            <h2>⚠️ Error Handling</h2>
+            
+            <h3>HTTP Error Codes</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Common Causes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>400</td>
+                            <td>Bad Request</td>
+                            <td>Invalid request data</td>
+                            <td>Missing fields, invalid format</td>
+                        </tr>
+                        <tr>
+                            <td>401</td>
+                            <td>Unauthorized</td>
+                            <td>Authentication required</td>
+                            <td>Missing or invalid token</td>
+                        </tr>
+                        <tr>
+                            <td>403</td>
+                            <td>Forbidden</td>
+                            <td>Permission denied</td>
+                            <td>Not a group member, insufficient rights</td>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>Not Found</td>
+                            <td>Resource doesn't exist</td>
+                            <td>Invalid group/user ID</td>
+                        </tr>
+                        <tr>
+                            <td>429</td>
+                            <td>Too Many Requests</td>
+                            <td>Rate limit exceeded</td>
+                            <td>Sending messages too quickly</td>
+                        </tr>
+                        <tr>
+                            <td>500</td>
+                            <td>Internal Server Error</td>
+                            <td>Server-side error</td>
+                            <td>Database issues, unhandled exceptions</td>
+                        </tr>
+                        <tr>
+                            <td>503</td>
+                            <td>Service Unavailable</td>
+                            <td>Service temporarily down</td>
+                            <td>Database offline, Redis unavailable</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Error Response Format</h3>
+            <pre>
+{
+    "error": {
+        "code": "VALIDATION_ERROR",
+        "message": "Invalid request data",
+        "details": {
+            "content": ["This field is required"],
+            "group": ["Invalid group ID"]
+        },
+        "timestamp": "2025-01-15T10:30:00Z"
+    }
+}
+</pre>
+
+            <h3>Common Error Scenarios</h3>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h4>Validation Errors</h4>
+                    <pre>
+// Missing required field
+{
+    "error": {
+        "code": "VALIDATION_ERROR",
+        "message": "Content is required",
+        "details": {
+            "content": ["This field is required"]
+        }
+    }
+}
+
+// Invalid recipient
+{
+    "error": {
+        "code": "INVALID_RECIPIENT",
+        "message": "Recipient must be in same group"
+    }
+}
+</pre>
+                </div>
+
+                <div class="card">
+                    <h4>WebSocket Errors</h4>
+                    <pre>
+// Connection failed
+{
+    "type": "error",
+    "data": {
+        "code": "CONNECTION_FAILED",
+        "message": "Failed to establish connection"
+    }
+}
+
+// Message too large
+{
+    "type": "error",
+    "data": {
+        "code": "MESSAGE_TOO_LARGE",
+        "message": "Message exceeds 10KB limit"
+    }
+}
+</pre>
+                </div>
+            </div>
+
+            <h3>Error Handling Best Practices</h3>
+            <ul>
+                <li>Always check HTTP status codes before processing responses</li>
+                <li>Implement exponential backoff for retries</li>
+                <li>Log errors with sufficient context for debugging</li>
+                <li>Display user-friendly error messages in UI</li>
+                <li>Handle WebSocket disconnections gracefully with auto-reconnect</li>
+                <li>Monitor error rates to detect systemic issues</li>
+                <li>Use circuit breakers for external service calls</li>
+            </ul>
+
+            <h3>Client-Side Error Handling Example</h3>
+            <pre>
+async function sendMessage(groupId, content) {
+    try {
+        const response = await fetch('/api/messages/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                group: groupId,
+                message_type: 'group',
+                content: content
+            })
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            
+            switch (response.status) {
+                case 401:
+                    // Token expired - refresh or re-login
+                    await refreshToken();
+                    return sendMessage(groupId, content); // Retry
+                    
+                case 403:
+                    showError('You are not a member of this group');
+                    break;
+                    
+                case 429:
+                    showError('Sending too fast. Please wait.');
+                    break;
+                    
+                default:
+                    showError(error.error.message || 'Failed to send message');
+            }
+            
+            return null;
+        }
+
+        return await response.json();
+        
+    } catch (error) {
+        console.error('Network error:', error);
+        showError('Network error. Please check your connection.');
+        return null;
+    }
+}
+</pre>
+        </section>
+
+        <section id="monitoring">
+            <h2>📊 Monitoring & Observability</h2>
+            
+            <h3>Key Metrics to Monitor</h3>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h4>Application Metrics</h4>
+                    <ul>
+                        <li>Active WebSocket connections</li>
+                        <li>Messages sent per second</li>
+                        <li>Message delivery latency</li>
+                        <li>API request rate</li>
+                        <li>Error rate (4xx, 5xx)</li>
+                        <li>Authentication failures</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Infrastructure Metrics</h4>
+                    <ul>
+                        <li>CPU usage (Django, Go, Redis, Postgres)</li>
+                        <li>Memory usage</li>
+                        <li>Disk I/O</li>
+                        <li>Network bandwidth</li>
+                        <li>Redis pub/sub channel activity</li>
+                        <li>Database connection pool usage</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Business Metrics</h4>
+                    <ul>
+                        <li>Active users (hourly, daily)</li>
+                        <li>Messages per user</li>
+                        <li>Group creation rate</li>
+                        <li>Average group size</li>
+                        <li>User retention rate</li>
+                        <li>Peak concurrent connections</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Performance Metrics</h4>
+                    <ul>
+                        <li>API response time (p50, p95, p99)</li>
+                        <li>WebSocket message latency</li>
+                        <li>Database query time</li>
+                        <li>Redis operation latency</li>
+                        <li>Time to first message</li>
+                        <li>Connection establishment time</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Logging Configuration</h3>
+
+            <h4>Django Logging</h4>
+            <pre>
+# settings.py
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+        'json': {
+            '()': 'pythonjsonlogger.jsonlogger.JsonFormatter',
+            'format': '%(asctime)s %(name)s %(levelname)s %(message)s'
+        }
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
+        'file': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': '/var/log/messaging/django.log',
+            'maxBytes': 10485760,  # 10MB
+            'backupCount': 5,
+            'formatter': 'json'
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+        },
+        'messaging': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',
+        }
+    }
+}
+</pre>
+
+            <h4>Go Logging</h4>
+            <pre>
+// logger.go
+package main
+
+import (
+    "github.com/sirupsen/logrus"
+    "os"
+)
+
+var log = logrus.New()
+
+func initLogger() {
+    log.SetFormatter(&logrus.JSONFormatter{})
+    
+    file, err := os.OpenFile("/var/log/messaging/websocket.log", 
+        os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+    if err == nil {
+        log.Out = file
+    } else {
+        log.Info("Failed to log to file, using default stderr")
+    }
+    
+    log.SetLevel(logrus.InfoLevel)
+}
+
+// Usage
+log.WithFields(logrus.Fields{
+    "user_id": userID,
+    "group_id": groupID,
+    "action": "send_message",
+}).Info("Message sent")
+
+log.WithFields(logrus.Fields{
+    "user_id": userID,
+    "error": err.Error(),
+}).Error("WebSocket connection failed")
+</pre>
+
+            <h3>Health Check Endpoints</h3>
+
+            <h4>Django Health Check</h4>
+            <pre>
+# views.py
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from django.db import connection
+import redis
+
+class HealthCheckView(APIView):
+    authentication_classes = []
+    permission_classes = []
+    
+    def get(self, request):
+        health = {
+            'status': 'healthy',
+            'services': {}
+        }
+        
+        # Check database
+        try:
+            connection.ensure_connection()
+            health['services']['database'] = 'healthy'
+        except Exception as e:
+            health['status'] = 'unhealthy'
+            health['services']['database'] = f'unhealthy: {str(e)}'
+        
+        # Check Redis
+        try:
+            redis_client = redis.Redis(host='redis', port=6379)
+            redis_client.ping()
+            health['services']['redis'] = 'healthy'
+        except Exception as e:
+            health['status'] = 'unhealthy'
+            health['services']['redis'] = f'unhealthy: {str(e)}'
+        
+        status_code = 200 if health['status'] == 'healthy' else 503
+        return Response(health, status=status_code)
+
+# urls.py
+path('health/', HealthCheckView.as_view(), name='health-check')
+</pre>
+
+            <h4>Go Health Check</h4>
+            <pre>
+// health.go
+func healthCheckHandler(w http.ResponseWriter, r *http.Request) {
+    health := map[string]interface{}{
+        "status": "healthy",
+        "services": map[string]string{},
+    }
+    
+    // Check Redis
+    ctx := context.Background()
+    _, err := redisClient.Ping(ctx).Result()
+    if err != nil {
+        health["status"] = "unhealthy"
+        health["services"].(map[string]string)["redis"] = "unhealthy: " + err.Error()
+    } else {
+        health["services"].(map[string]string)["redis"] = "healthy"
+    }
+    
+    // Check active connections
+    activeConns := len(hub.clients)
+    health["active_connections"] = activeConns
+    
+    statusCode := 200
+    if health["status"] != "healthy" {
+        statusCode = 503
+    }
+    
+    w.Header().Set("Content-Type", "application/json")
+    w.WriteHeader(statusCode)
+    json.NewEncoder(w).Encode(health)
+}
+
+// Register endpoint
+http.HandleFunc("/health", healthCheckHandler)
+</pre>
+
+            <h3>Prometheus Metrics</h3>
+            <pre>
+# Install prometheus_client
+# pip install prometheus-client
+
+# metrics.py
+from prometheus_client import Counter, Histogram, Gauge
+import time
+
+# Define metrics
+messages_sent = Counter('messages_sent_total', 'Total messages sent', ['type'])
+message_latency = Histogram('message_latency_seconds', 'Message delivery latency')
+active_users = Gauge('active_users', 'Number of active users')
+websocket_connections = Gauge('websocket_connections', 'Active WebSocket connections')
+
+# Usage in views
+def send_message_view(request):
+    start_time = time.time()
+    
+    # ... send message logic ...
+    
+    # Record metrics
+    messages_sent.labels(type='group').inc()
+    message_latency.observe(time.time() - start_time)
+    
+    return Response(...)
+
+# Expose metrics endpoint
+from prometheus_client import generate_latest
+
+def metrics_view(request):
+    return HttpResponse(generate_latest(), content_type='text/plain')
+</pre>
+
+            <h3>Monitoring Stack with Docker Compose</h3>
+            <pre>
+# docker-compose.monitoring.yml
+version: '3.8'
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - loki_data:/loki
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - /var/log:/var/log
+      - ./promtail-config.yml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
+
+volumes:
+  prometheus_data:
+  grafana_data:
+  loki_data:
+</pre>
+
+            <h3>Alerting Rules</h3>
+            <pre>
+# prometheus-alerts.yml
+groups:
+  - name: messaging_alerts
+    interval: 30s
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High error rate detected"
+          description: "Error rate is {{ $value }} errors/sec"
+
+      - alert: WebSocketConnectionsDrop
+        expr: websocket_connections < 10
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "WebSocket connections dropped"
+          description: "Only {{ $value }} active connections"
+
+      - alert: DatabaseConnectionPoolExhausted
+        expr: db_connection_pool_usage > 0.9
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Database connection pool nearly exhausted"
+
+      - alert: RedisDown
+        expr: up{job="redis"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Redis is down"
+          description: "Redis has been down for more than 1 minute"
+
+      - alert: HighMessageLatency
+        expr: histogram_quantile(0.95, message_latency_seconds) > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High message delivery latency"
+          description: "95th percentile latency is {{ $value }}s"
+</pre>
+        </section>
+
+        <section id="deployment">
+            <h2>🚀 Deployment</h2>
+            
+            <h3>Production Checklist</h3>
+
+            <div class="alert alert-warning">
+                <strong>⚠️ Before Deploying to Production:</strong>
+                <ul style="margin-top: 0.5rem; margin-left: 2rem;">
+                    <li>Change all default passwords and secret keys</li>
+                    <li>Enable HTTPS/TLS for all connections</li>
+                    <li>Set DEBUG=False in Django</li>
+                    <li>Configure proper CORS origins</li>
+                    <li>Set up database backups</li>
+                    <li>Enable rate limiting</li>
+                    <li>Configure monitoring and alerting</li>
+                    <li>Set up log aggregation</li>
+                    <li>Test disaster recovery procedures</li>
+                </ul>
+            </div>
+
+            <h3>Environment Variables</h3>
+            <pre>
+# .env.production
+# Django
+SECRET_KEY=your-long-random-secret-key-here
+DEBUG=False
+ALLOWED_HOSTS=yourdomain.com,www.yourdomain.com
+DATABASE_URL=postgresql://user:pass@postgres:5432/messaging_prod
+
+# Redis
+REDIS_URL=redis://redis:6379/0
+REDIS_PASSWORD=your-redis-password
+
+# WebSocket
+WS_SERVER_URL=wss://ws.yourdomain.com
+WS_PORT=8080
+
+# CORS
+CORS_ALLOWED_ORIGINS=https://yourdomain.com,https://www.yourdomain.com
+
+# JWT
+JWT_SECRET_KEY=your-jwt-secret-key
+JWT_EXPIRATION_HOURS=24
+
+# Email (for notifications)
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER=your-email@gmail.com
+EMAIL_HOST_PASSWORD=your-email-password
+
+# Monitoring
+SENTRY_DSN=https://your-sentry-dsn
+PROMETHEUS_ENABLED=True
+
+# Security
+SECURE_SSL_REDIRECT=True
+SESSION_COOKIE_SECURE=True
+CSRF_COOKIE_SECURE=True
+SECURE_HSTS_SECONDS=31536000
+</pre>
+
+            <h3>Docker Production Configuration</h3>
+            <pre>
+# docker-compose.prod.yml
+version: '3.8'
+
+services:
+  django:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 4
+    env_file:
+      - .env.production
+    depends_on:
+      - postgres
+      - redis
+    restart: always
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/mediafiles
+
+  websocket:
+    build:
+      context: ./websocket-server
+      dockerfile: Dockerfile.prod
+    env_file:
+      - .env.production
+    depends_on:
+      - redis
+    restart: always
+    ports:
+      - "8080:8080"
+
+  postgres:
+    image: postgres:14-alpine
+    env_file:
+      - .env.production
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis_data:/data
+    restart: always
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+      - static_volume:/app/staticfiles
+      - media_volume:/app/mediafiles
+    depends_on:
+      - django
+      - websocket
+    restart: always
+
+volumes:
+  postgres_data:
+  redis_data:
+  static_volume:
+  media_volume:
+</pre>
+
+            <h3>Nginx Configuration</h3>
+            <pre>
+# nginx/nginx.conf
+upstream django {
+    server django:8000;
+}
+
+upstream websocket {
+    server websocket:8080;
+}
+
+# HTTP redirect to HTTPS
+server {
+    listen 80;
+    server_name yourdomain.com www.yourdomain.com;
+    return 301 https://$server_name$request_uri;
+}
+
+# HTTPS server
+server {
+    listen 443 ssl http2;
+    server_name yourdomain.com www.yourdomain.com;
+
+    ssl_certificate /etc/nginx/ssl/cert.pem;
+    ssl_certificate_key /etc/nginx/ssl/key.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+
+    client_max_body_size 10M;
+
+    # Django API
+    location /api/ {
+        proxy_pass http://django;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Django Admin
+    location /admin/ {
+        proxy_pass http://django;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    # Static files
+    location /static/ {
+        alias /app/staticfiles/;
+    }
+
+    # Media files
+    location /media/ {
+        alias /app/mediafiles/;
+    }
+
+    # WebSocket
+    location /ws/ {
+        proxy_pass http://websocket;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_read_timeout 86400;
+    }
+}
+</pre>
+
+            <h3>Kubernetes Deployment</h3>
+            <pre>
+# k8s/django-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: django-api
+  template:
+    metadata:
+      labels:
+        app: django-api
+    spec:
+      containers:
+      - name: django
+        image: your-registry/messaging-django:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: url
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: redis-credentials
+              key: url
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health/
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health/
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: django-api-service
+spec:
+  selector:
+    app: django-api
+  ports:
+  - protocol: TCP
+    port: 8000
+    targetPort: 8000
+  type: ClusterIP
+</pre>
+
+            <h3>CI/CD Pipeline (GitHub Actions)</h3>
+            <pre>
+# .github/workflows/deploy.yml
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest pytest-cov
+      
+      - name: Run tests
+        run: |
+          pytest --cov=messaging tests/
+      
+      - name: Check code quality
+        run: |
+          pip install flake8 black
+          flake8 messaging/
+          black --check messaging/
+
+  build-and-deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Build Django image
+        run: |
+          docker build -t ${{ secrets.REGISTRY }}/messaging-django:${{ github.sha }} ./backend
+          docker push ${{ secrets.REGISTRY }}/messaging-django:${{ github.sha }}
+      
+      - name: Build WebSocket image
+        run: |
+          docker build -t ${{ secrets.REGISTRY }}/messaging-ws:${{ github.sha }} ./websocket-server
+          docker push ${{ secrets.REGISTRY }}/messaging-ws:${{ github.sha }}
+      
+      - name: Deploy to Kubernetes
+        uses: azure/k8s-deploy@v1
+        with:
+          manifests: |
+            k8s/django-deployment.yaml
+            k8s/websocket-deployment.yaml
+          images: |
+            ${{ secrets.REGISTRY }}/messaging-django:${{ github.sha }}
+            ${{ secrets.REGISTRY }}/messaging-ws:${{ github.sha }}
+</pre>
+
+            <h3>Scaling Strategies</h3>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h4>Horizontal Scaling</h4>
+                    <ul>
+                        <li>Deploy multiple Django API instances behind load balancer</li>
+                        <li>Run multiple WebSocket server instances</li>
+                        <li>Use Redis Pub/Sub for inter-instance communication</li>
+                        <li>Implement sticky sessions for WebSocket connections</li>
+                        <li>Scale database with read replicas</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Vertical Scaling</h4>
+                    <ul>
+                        <li>Increase CPU/memory for database server</li>
+                        <li>Use faster storage (SSD/NVMe)</li>
+                        <li>Optimize Redis configuration</li>
+                        <li>Tune PostgreSQL parameters</li>
+                        <li>Increase worker processes/threads</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Database Optimization</h4>
+                    <ul>
+                        <li>Add appropriate indexes</li>
+                        <li>Implement connection pooling</li>
+                        <li>Use database query caching</li>
+                        <li>Archive old messages</li>
+                        <li>Partition large tables</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Caching Strategy</h4>
+                    <ul>
+                        <li>Cache user sessions in Redis</li>
+                        <li>Cache group membership lists</li>
+                        <li>Cache frequently accessed messages</li>
+                        <li>Use CDN for static assets</li>
+                        <li>Implement HTTP caching headers</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Backup Strategy</h3>
+            <pre>
+# Automated PostgreSQL backup script
+#!/bin/bash
+
+# backup.sh
+BACKUP_DIR="/backups/postgres"
+TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+BACKUP_FILE="$BACKUP_DIR/messaging_db_$TIMESTAMP.sql.gz"
+
+# Create backup
+docker exec postgres pg_dump -U postgres messaging_db | gzip > $BACKUP_FILE
+
+# Upload to S3
+aws s3 cp $BACKUP_FILE s3://your-backup-bucket/postgres/
+
+# Keep only last 7 days locally
+find $BACKUP_DIR -name "*.sql.gz" -mtime +7 -delete
+
+# Schedule with cron
+# 0 2 * * * /path/to/backup.sh
+</pre>
+
+            <h3>Disaster Recovery</h3>
+            <pre>
+# Restore from backup
+#!/bin/bash
+
+# restore.sh
+BACKUP_FILE=$1
+
+if [ -z "$BACKUP_FILE" ]; then
+    echo "Usage: ./restore.sh <backup-file.sql.gz>"
+    exit 1
+fi
+
+# Stop application
+docker-compose down
+
+# Restore database
+gunzip < $BACKUP_FILE | docker exec -i postgres psql -U postgres -d messaging_db
+
+# Start application
+docker-compose up -d
+
+echo "Database restored from $BACKUP_FILE"
+</pre>
+
+            <h3>Security Hardening</h3>
+            <ul>
+                <li>Enable firewall rules to restrict access</li>
+                <li>Use fail2ban to prevent brute force attacks</li>
+                <li>Implement rate limiting at multiple levels (nginx, application)</li>
+                <li>Regular security updates for all dependencies</li>
+                <li>Enable audit logging for sensitive operations</li>
+                <li>Use secrets management (Vault, AWS Secrets Manager)</li>
+                <li>Implement CSRF protection</li>
+                <li>Enable SQL injection protection</li>
+                <li>Configure Content Security Policy headers</li>
+                <li>Regular penetration testing</li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>✅ Production Deployment Complete!</strong>
+                <p style="margin-top: 0.5rem;">Your distributed messaging application is now ready for production use with:</p>
+                <ul style="margin-top: 0.5rem; margin-left: 2rem;">
+                    <li>Scalable architecture</li>
+                    <li>High availability</li>
+                    <li>Comprehensive monitoring</li>
+                    <li>Automated backups</li>
+                    <li>Security hardening</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="conclusion">
+            <h2>🎯 Conclusion</h2>
+            
+            <p>This documentation covers a complete distributed messaging application demonstrating key distributed systems concepts:</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h4>✅ Message Passing</h4>
+                    <p>Redis Pub/Sub enables communication between Django and Go services without shared memory.</p>
+                </div>
+
+                <div class="card">
+                    <h4>✅ Multicast Communication</h4>
+                    <p>Group messages are delivered to all online members simultaneously via WebSocket.</p>
+                </div>
+
+                <div class="card">
+                    <h4>✅ Unicast Communication</h4>
+                    <p>Private messages are routed to specific recipients only, ensuring privacy.</p>
+                </div>
+
+                <div class="card">
+                    <h4>✅ Active Membership</h4>
+                    <p>Real-time tracking of online users with join/leave notifications.</p>
+                </div>
+
+                <div class="card">
+                    <h4>✅ Distributed Nodes</h4>
+                    <p>Multiple independent services (Django, Go, Redis, PostgreSQL) working together.</p>
+                </div>
+
+                <div class="card">
+                    <h4>✅ Reliability</h4>
+                    <p>Message persistence, error handling, automatic reconnection, and health monitoring.</p>
+                </div>
+            </div>
+
+            <h3>Next Steps</h3>
+            <ul>
+                <li>Implement end-to-end encryption for messages</li>
+                <li>Add file sharing capabilities</li>
+                <li>Implement message reactions and threading</li>
+                <li>Add voice/video calling features</li>
+                <li>Create mobile applications (iOS, Android)</li>
+                <li>Implement message search functionality</li>
+                <li>Add user presence indicators</li>
+                <li>Implement message editing and deletion</li>
+                <li>Add notification system (push notifications)</li>
+                <li>Create admin dashboard for monitoring</li>
+            </ul>
+
+            <h3>Additional Resources</h3>
+            <ul>
+                <li><strong>Django Documentation:</strong> <a href="https://docs.djangoproject.com/" target="_blank">https://docs.djangoproject.com/</a></li>
+                <li><strong>Go Documentation:</strong> <a href="https://go.dev/doc/" target="_blank">https://go.dev/doc/</a></li>
+                <li><strong>Redis Documentation:</strong> <a href="https://redis.io/documentation" target="_blank">https://redis.io/documentation</a></li>
+                <li><strong>WebSocket Protocol:</strong> <a href="https://tools.ietf.org/html/rfc6455" target="_blank">RFC 6455</a></li>
+                <li><strong>PostgreSQL Documentation:</strong> <a href="https://www.postgresql.org/docs/" target="_blank">https://www.postgresql.org/docs/</a></li>
+                <li><strong>Docker Documentation:</strong> <a href="https://docs.docker.com/" target="_blank">https://docs.docker.com/</a></li>
+            </ul>
+
+            
+        </section>
+
+    </div>
