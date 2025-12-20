@@ -360,12 +360,90 @@
         .download-btn:hover {
             background: #059669;
         }
-    </style>
+    
+/* ---------- Mobile Enhancements ---------- */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.nav-toggle {
+    display: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        width: 100%;
+        display: none;
+        flex-direction: column;
+        margin-top: 1rem;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    .nav-links li {
+        padding: 0.5rem 0;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    h2 {
+        font-size: 1.6rem;
+    }
+
+    h3 {
+        font-size: 1.3rem;
+    }
+
+    section {
+        padding: 1.5rem 1rem;
+    }
+}
+
+
+/* ---------- Flexible Image Handling ---------- */
+.diagram-container {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.diagram-container img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .diagram-container {
+        padding: 1rem;
+    }
+
+    .diagram-container img {
+        max-height: 70vh;
+    }
+}
+
+</style>
 </head>
 <body>
     <nav>
         <div class="nav-container">
-            <div class="logo">📡 Distributed Messaging</div>
+            <div class="logo">📡 Distributed Messaging</div><div class="nav-toggle" id="navToggle">☰</div>
             <ul class="nav-links">
                 <li><a href="#overview">Overview</a></li>
                 <li><a href="#architecture">Architecture</a></li>
@@ -563,7 +641,7 @@
             </div>
 
             <h3>API Endpoints</h3>
-            <table>
+            <div class="table-wrapper"><table>
                 <thead>
                     <tr>
                         <th>Endpoint</th>
@@ -603,7 +681,7 @@
                         <td>Get message history for specific group</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
 
             <h3>Message Types</h3>
             <div class="card-grid">
@@ -633,7 +711,7 @@
             <h2>🧪 Testing</h2>
             
             <h3>Test Results Summary</h3>
-            <table>
+            <div class="table-wrapper"><table>
                 <thead>
                     <tr>
                         <th>Test Case</th>
@@ -678,10 +756,10 @@
                         <td><span class="badge badge-success">✓ Pass</span></td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
 
             <h3>Distributed Concepts Verification</h3>
-            <table>
+            <div class="table-wrapper"><table>
                 <thead>
                     <tr>
                         <th>Concept</th>
@@ -721,7 +799,7 @@
                         <td><span class="badge badge-success">✓ Verified</span></td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
         </section>
 
         <section id="deployment">
@@ -767,7 +845,7 @@
             <p>This project successfully implements a distributed messaging application that demonstrates key distributed systems concepts including message passing, multicast/unicast communication, active membership management, and reliability features.</p>
 
             <h3>Core Requirements Met</h3>
-            <table>
+            <div class="table-wrapper"><table>
                 <thead>
                     <tr>
                         <th>Requirement</th>
@@ -807,7 +885,7 @@
                         <td><span class="badge badge-success">✓ Complete</span></td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
 
             <h3>Distributed Concepts Demonstrated</h3>
             
@@ -925,5 +1003,12 @@
             window.print();
         }
     </script>
+
+<script>
+document.getElementById('navToggle').addEventListener('click', () => {
+    document.querySelector('.nav-links').classList.toggle('show');
+});
+</script>
+
 </body>
 </html>
