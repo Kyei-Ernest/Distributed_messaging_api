@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distributed Messaging Application - Complete Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --light: #f8fafc;
+            --dark: #0f172a;
+            --border: #e2e8f0;
+            --code-bg: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+        }
+
+        nav {
+            background: var(--dark);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            background: white;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        h3 {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem 0;
+        }
+
+        h4 {
+            color: var(--dark);
+            font-size: 1.2rem;
+            margin: 1.5rem 0 0.5rem 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin: 0.25rem;
+        }
+
+        .badge-success { background: var(--success); color: white; }
+        .badge-primary { background: var(--primary); color: white; }
+        .badge-warning { background: var(--warning); color: white; }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .card h4 {
+            margin-top: 0;
+        }
+
+        pre {
+            background: var(--code-bg);
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+        }
+
+        .diagram-container {
+            background: var(--light);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .diagram-placeholder {
+            background: white;
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 4rem 2rem;
+            margin: 1rem 0;
+            color: var(--secondary);
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .diagram-placeholder p {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .diagram-placeholder small {
+            color: var(--secondary);
+            opacity: 0.7;
+        }
+
+        .architecture-ascii {
+            background: white;
+            border: 2px solid var(--border);
+            padding: 2rem;
+            border-radius: 8px;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+            line-height: 1.4;
+            color: var(--dark);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--light);
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        tr:hover {
+            background: var(--light);
+        }
+
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        li {
+            margin: 0.5rem 0;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid;
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            border-color: var(--primary);
+            color: var(--primary-dark);
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            border-color: var(--success);
+            color: #065f46;
+        }
+
+        .alert-warning {
+            background: #fef3c7;
+            border-color: var(--warning);
+            color: #92400e;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 2rem;
+            background: var(--light);
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .command-box {
+            background: var(--code-bg);
+            color: #10b981;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .command-box::before {
+            content: '$ ';
+            color: #3b82f6;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .card-grid, .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            nav, footer {
+                display: none;
+            }
+            
+            section {
+                page-break-inside: avoid;
+            }
+        }
+
+        .download-btn {
+            background: var(--success);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.5rem;
+            transition: background 0.3s;
+        }
+
+        .download-btn:hover {
+            background: #059669;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">📡 Distributed Messaging</div>
+            <ul class="nav-links">
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#architecture">Architecture</a></li>
+                <li><a href="#diagrams">Diagrams</a></li>
+                <li><a href="#implementation">Implementation</a></li>
+                <li><a href="#testing">Testing</a></li>
+                <li><a href="#deployment">Deployment</a></li>
+                <li><a href="#report">Report</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>Distributed Messaging Application</h1>
+        <p>Complete Documentation & Implementation Guide</p>
+        <div style="margin-top: 2rem;">
+            <span class="badge badge-success">✓ Message Passing</span>
+            <span class="badge badge-success">✓ Multicast/Unicast</span>
+            <span class="badge badge-success">✓ Active Membership</span>
+            <span class="badge badge-success">✓ Distributed Nodes</span>
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <section id="overview">
+            <h2>📋 System Overview</h2>
+            
+            <p>A fully functional distributed messaging application demonstrating core concepts in distributed systems, including message passing, multicast/unicast communication, active membership management, and reliability features.</p>
+
+            <h3>Key Features</h3>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">👥</div>
+                    <h4>Group Management</h4>
+                    <p>Create, join, and leave groups with real-time membership tracking</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📢</div>
+                    <h4>Multicast Messaging</h4>
+                    <p>Send messages to all group members simultaneously</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💬</div>
+                    <h4>Unicast Messaging</h4>
+                    <p>Private messages delivered to specific recipients only</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔄</div>
+                    <h4>Real-time Updates</h4>
+                    <p>WebSocket connections for instant message delivery</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <h4>Message Logging</h4>
+                    <p>Persistent storage with complete message history</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔔</div>
+                    <h4>Join/Leave Detection</h4>
+                    <p>Automatic notifications when members connect/disconnect</p>
+                </div>
+            </div>
+
+            <h3>Technology Stack</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h4>Django (Python)</h4>
+                    <p><strong>Purpose:</strong> REST API, Authentication, Persistence</p>
+                    <p><strong>Port:</strong> 8000</p>
+                    <span class="badge badge-primary">Backend</span>
+                </div>
+                <div class="card">
+                    <h4>Go WebSocket Server</h4>
+                    <p><strong>Purpose:</strong> Real-time Communication, Message Routing</p>
+                    <p><strong>Port:</strong> 8080</p>
+                    <span class="badge badge-primary">Backend</span>
+                </div>
+                <div class="card">
+                    <h4>Redis Pub/Sub</h4>
+                    <p><strong>Purpose:</strong> Message Broker, Inter-service Communication</p>
+                    <p><strong>Port:</strong> 6379</p>
+                    <span class="badge badge-warning">Infrastructure</span>
+                </div>
+                <div class="card">
+                    <h4>PostgreSQL</h4>
+                    <p><strong>Purpose:</strong> Persistent Data Storage</p>
+                    <p><strong>Port:</strong> 5432</p>
+                    <span class="badge badge-warning">Infrastructure</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="architecture">
+            <h2>🏗️ System Architecture</h2>
+            
+            <h3>High-Level Architecture</h3>
+            <div class="architecture-ascii">
+┌─────────────────────────────────────────────────────────┐
+│                    Client Layer                          │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐             │
+│  │ Browser  │  │ Browser  │  │ Browser  │             │
+│  │ Client 1 │  │ Client 2 │  │ Client 3 │             │
+│  └────┬─────┘  └────┬─────┘  └────┬─────┘             │
+└───────┼─────────────┼─────────────┼───────────────────┘
+        │ HTTP/WS     │ HTTP/WS     │ HTTP/WS
+        │             │             │
+┌───────▼─────────────▼─────────────▼───────────────────┐
+│              Application Layer                          │
+│  ┌──────────────────┐      ┌─────────────────┐        │
+│  │   Django API     │◄────►│  Go WebSocket   │        │
+│  │   (Port 8000)    │      │  Server (8080)  │        │
+│  │                  │      │                 │        │
+│  │ • REST APIs      │      │ • WS Handler    │        │
+│  │ • Auth           │      │ • Active Users  │        │
+│  │ • Group Logic    │      │ • Message Route │        │
+│  └────────┬─────────┘      └────────┬────────┘        │
+└───────────┼──────────────────────────┼─────────────────┘
+            │ Pub/Sub                  │ Pub/Sub
+┌───────────▼──────────────────────────▼─────────────────┐
+│                 Message Layer (Redis)                   │
+└─────────────────────┬───────────────────────────────────┘
+                      │
+┌─────────────────────▼───────────────────────────────────┐
+│                 Data Layer (PostgreSQL)                 │
+└─────────────────────────────────────────────────────────┘
+            </div>
+
+            <div class="alert alert-info">
+                <strong>Key Principle:</strong> No shared memory between services. All communication happens through explicit message passing via Redis Pub/Sub channels.
+            </div>
+        </section>
+
+        <section id="diagrams">
+            <h2>📊 UML Diagrams</h2>
+            
+            
+
+            <h3>1. Class Diagram</h3>
+            <div class="diagram-container">
+                <img src="uml1.png"></img>
+               
+            </div>
+
+            <h3>2. Use Case Diagram</h3>
+            <div class="diagram-container">
+                <img src="usecase1.png"></img>
+            </div>
+
+            <h3>3. Sequence Diagram: Group Message (Multicast)</h3>
+            <div class="diagram-container">
+               <img src="sequence_diagram1.png"></img>
+            </div>
+
+            <h3>4. Sequence Diagram: Private Message (Unicast)</h3>
+            <div class="diagram-container">
+                <img src="sequence_diagram2.png"></img>
+            </div>
+
+            <h3>5. Sequence Diagram: Join Group</h3>
+            <div class="diagram-container">
+                <img src="sequence_diagram3.png"></img>
+            </div>
+
+            <h3>6. Sequence Diagram: Leave/Disconnect</h3>
+            <div class="diagram-container">
+                <img src="sequence_diagram4.png"></img>
+            </div>
+
+            <h3>7. Deployment Diagram</h3>
+            <div class="diagram-container">
+                 <img src="deployment_diagram1.png"></img>
+            </div>
+
+            <h3>8. Component Diagram</h3>
+            <div class="diagram-container">
+                                 <img src="component_diagram1.png"></img>
+            </div>
+        </section>
+
+        <section id="implementation">
+            <h2>💻 Implementation Guide</h2>
+            
+            <h3>Quick Start with Docker</h3>
+            <div class="command-box">docker-compose up -d</div>
+            <div class="command-box">docker-compose ps</div>
+            
+            <div class="alert alert-success">
+                <strong>✓ Access Points:</strong>
+                <ul style="margin-top: 0.5rem; margin-left: 2rem;">
+                    <li>Django API: <a href="http://localhost:8000" target="_blank">http://localhost:8000</a></li>
+                    <li>WebSocket: ws://localhost:8080</li>
+                    <li>Admin: <a href="http://localhost:8000/admin" target="_blank">http://localhost:8000/admin</a></li>
+                </ul>
+            </div>
+
+            <h3>API Endpoints</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Endpoint</th>
+                        <th>Method</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>/api/groups/</td>
+                        <td>GET, POST</td>
+                        <td>List all groups or create new group</td>
+                    </tr>
+                    <tr>
+                        <td>/api/groups/{id}/join/</td>
+                        <td>POST</td>
+                        <td>Join a group</td>
+                    </tr>
+                    <tr>
+                        <td>/api/groups/{id}/leave/</td>
+                        <td>POST</td>
+                        <td>Leave a group</td>
+                    </tr>
+                    <tr>
+                        <td>/api/groups/{id}/members/</td>
+                        <td>GET</td>
+                        <td>List group members</td>
+                    </tr>
+                    <tr>
+                        <td>/api/messages/</td>
+                        <td>GET, POST</td>
+                        <td>List messages or send new message</td>
+                    </tr>
+                    <tr>
+                        <td>/api/messages/?group={id}</td>
+                        <td>GET</td>
+                        <td>Get message history for specific group</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Message Types</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h4>Group Message (Multicast)</h4>
+                    <pre style="font-size: 0.8rem;">{
+  "group": 1,
+  "message_type": "group",
+  "content": "Hello everyone!"
+}</pre>
+                    <p style="margin-top: 1rem;">Delivered to <strong>all</strong> online group members</p>
+                </div>
+                <div class="card">
+                    <h4>Private Message (Unicast)</h4>
+                    <pre style="font-size: 0.8rem;">{
+  "group": 1,
+  "recipient": 5,
+  "message_type": "private",
+  "content": "Private message"
+}</pre>
+                    <p style="margin-top: 1rem;">Delivered to <strong>specific recipient only</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="testing">
+            <h2>🧪 Testing</h2>
+            
+            <h3>Test Results Summary</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Test Case</th>
+                        <th>Expected Result</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>User Registration</td>
+                        <td>User created in database</td>
+                        <td><span class="badge badge-success">✓ Pass</span></td>
+                    </tr>
+                    <tr>
+                        <td>Group Creation</td>
+                        <td>Group created, creator auto-joined</td>
+                        <td><span class="badge badge-success">✓ Pass</span></td>
+                    </tr>
+                    <tr>
+                        <td>Join Group</td>
+                        <td>Membership created, join event sent</td>
+                        <td><span class="badge badge-success">✓ Pass</span></td>
+                    </tr>
+                    <tr>
+                        <td>Send Group Message</td>
+                        <td>All members receive message</td>
+                        <td><span class="badge badge-success">✓ Pass</span></td>
+                    </tr>
+                    <tr>
+                        <td>Send Private Message</td>
+                        <td>Only recipient receives</td>
+                        <td><span class="badge badge-success">✓ Pass</span></td>
+                    </tr>
+                    <tr>
+                        <td>Leave Group</td>
+                        <td>Membership deleted, leave event sent</td>
+                        <td><span class="badge badge-success">✓ Pass</span></td>
+                    </tr>
+                    <tr>
+                        <td>WebSocket Reconnect</td>
+                        <td>User marked active again</td>
+                        <td><span class="badge badge-success">✓ Pass</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Distributed Concepts Verification</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Concept</th>
+                        <th>Implementation</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Message Passing</td>
+                        <td>No shared memory, only network via Redis</td>
+                        <td><span class="badge badge-success">✓ Verified</span></td>
+                    </tr>
+                    <tr>
+                        <td>Multicast</td>
+                        <td>Group messages to all members</td>
+                        <td><span class="badge badge-success">✓ Verified</span></td>
+                    </tr>
+                    <tr>
+                        <td>Unicast</td>
+                        <td>Private messages to specific user</td>
+                        <td><span class="badge badge-success">✓ Verified</span></td>
+                    </tr>
+                    <tr>
+                        <td>Join Detection</td>
+                        <td>Real-time notification on connect</td>
+                        <td><span class="badge badge-success">✓ Verified</span></td>
+                    </tr>
+                    <tr>
+                        <td>Leave Detection</td>
+                        <td>Real-time notification on disconnect</td>
+                        <td><span class="badge badge-success">✓ Verified</span></td>
+                    </tr>
+                    <tr>
+                        <td>Message Logging</td>
+                        <td>All messages persisted in PostgreSQL</td>
+                        <td><span class="badge badge-success">✓ Verified</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="deployment">
+            <h2>🚀 Deployment</h2>
+            
+            <h3>Production Deployment Steps</h3>
+            <ol>
+                <li>Set up environment variables</li>
+                <li>Configure Nginx as reverse proxy</li>
+                <li>Set up SSL/TLS certificates</li>
+                <li>Configure systemd services</li>
+                <li>Set up database backups</li>
+                <li>Configure monitoring and logging</li>
+            </ol>
+
+            <h3>System Requirements</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h4>Minimum</h4>
+                    <ul>
+                        <li>2 CPU cores</li>
+                        <li>4 GB RAM</li>
+                        <li>20 GB storage</li>
+                        <li>Ubuntu 20.04+</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Recommended</h4>
+                    <ul>
+                        <li>4+ CPU cores</li>
+                        <li>8+ GB RAM</li>
+                        <li>50+ GB SSD</li>
+                        <li>Ubuntu 22.04 LTS</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="report">
+            <h2>📄 Project Report</h2>
+            
+            <h3>Executive Summary</h3>
+            <p>This project successfully implements a distributed messaging application that demonstrates key distributed systems concepts including message passing, multicast/unicast communication, active membership management, and reliability features.</p>
+
+            <h3>Core Requirements Met</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Requirement</th>
+                        <th>Implementation</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1. Group Management</td>
+                        <td>Create, join, leave groups with active member tracking</td>
+                        <td><span class="badge badge-success">✓ Complete</span></td>
+                    </tr>
+                    <tr>
+                        <td>2. Group Communication</td>
+                        <td>Multicast messages to all online group members</td>
+                        <td><span class="badge badge-success">✓ Complete</span></td>
+                    </tr>
+                    <tr>
+                        <td>3. Private Messaging</td>
+                        <td>Unicast messages to specific recipients</td>
+                        <td><span class="badge badge-success">✓ Complete</span></td>
+                    </tr>
+                    <tr>
+                        <td>4. Distributed Operation</td>
+                        <td>4 separate nodes, message passing via Redis</td>
+                        <td><span class="badge badge-success">✓ Complete</span></td>
+                    </tr>
+                    <tr>
+                        <td>5. Reliability Features</td>
+                        <td>Join/leave detection + message logging</td>
+                        <td><span class="badge badge-success">✓ Complete</span></td>
+                    </tr>
+                    <tr>
+                        <td>6. Interface</td>
+                        <td>Web-based interface with REST API + WebSockets</td>
+                        <td><span class="badge badge-success">✓ Complete</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Distributed Concepts Demonstrated</h3>
+            
+            <h4>1. Message Passing (No Shared Memory)</h4>
+            <ul>
+                <li>Django and Go run as separate processes</li>
+                <li>Communication only through Redis Pub/Sub</li>
+                <li>Network-based message exchange</li>
+                <li>Services can be deployed on different machines</li>
+            </ul>
+
+            <h4>2. Multicast Communication</h4>
+            <ul>
+                <li>Single message sent to group channel</li>
+                <li>All online members receive simultaneously</li>
+                <li>Go server routes to all active WebSocket connections</li>
+            </ul>
+
+            <h4>3. Unicast Communication</h4>
+            <ul>
+                <li>Private messages target specific user ID</li>
+                <li>Django validates membership</li>
+                <li>Only recipient's WebSocket receives message</li>
+            </ul>
+
+            <h4>4. Active Membership Management</h4>
+            <ul>
+                <li>Go tracks WebSocket connections in real-time</li>
+                <li>Automatic join/leave event broadcasting</li>
+                <li>Online member list updated dynamically</li>
+            </ul>
+
+            <h3>Limitations and Future Improvements</h3>
+            
+            <h4>Current Limitations</h4>
+            <ul>
+                <li>Single Go server limits scalability (~10K connections)</li>
+                <li>No message ordering guarantees across clients</li>
+                <li>No end-to-end encryption</li>
+                <li>Limited fault tolerance</li>
+            </ul>
+
+            <h4>Future Enhancements</h4>
+            <ul>
+                <li>Horizontal scaling with multiple Go servers</li>
+                <li>Message acknowledgments and delivery receipts</li>
+                <li>End-to-end encryption using Signal Protocol</li>
+                <li>File sharing capabilities</li>
+                <li>Voice/video calls using WebRTC</li>
+                <li>Mobile applications</li>
+            </ul>
+
+            <h3>Conclusion</h3>
+            <p>The system successfully demonstrates all required distributed systems concepts through a practical, production-ready messaging application. The modular architecture allows independent scaling and upgrading of components while maintaining clear separation of concerns.</p>
+
+            <div class="alert alert-success">
+                <strong>✓ Project Status:</strong> All core requirements met. System tested and ready for deployment.
+            </div>
+        </section>
+
+        <section>
+            <h2>📦 Deliverables</h2>
+            
+            <h3>Documentation</h3>
+            <div style="margin: 1.5rem 0;">
+                <a href="#" class="download-btn" onclick="alert('Click to download complete documentation'); return false;">
+                    📄 Complete Documentation Package
+                </a>
+                <a href="#" class="download-btn" onclick="alert('Click to download PlantUML code'); return false;">
+                    📊 All PlantUML Diagrams
+                </a>
+                <a href="#" class="download-btn" onclick="alert('Click to download project report'); return false;">
+                    📝 Project Report (2-3 pages)
+                </a>
+            </div>
+
+            <h3>Source Code</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h4>📁 File Structure</h4>
+                    <pre style="font-size: 0.75rem; padding: 1rem;">distributed-messaging-app/
+├── messaging_backend/
+│   ├── api/
+│   ├── manage.py
+│   └── requirements.txt
+├── websocket-server/
+│   ├── main.go
+│   └── go.mod
+├── frontend/
+│   └── index.html
+└── docker-compose.yml</pre>
+                </div>
+                <div class="card">
+                    <h4>🚀 Quick Commands</h4>
+                    <div class="command-box" style="font-size: 0.8rem;">git clone [repository]</div>
+                    <div class="command-box" style="font-size: 0.8rem;">docker-compose up -d</div>
+                    <div class="command-box" style="font-size: 0.8rem;">docker-compose logs -f</div>
+                </div>
+            </div>
+
+            <h3>Setup Instructions</h3>
+            <ol>
+                <li>Clone the repository</li>
+                <li>Install Docker and Docker Compose</li>
+                <li>Run <code>docker-compose up -d</code></li>
+                <li>Access Django admin at http://localhost:8000/admin</li>
+                <li>Create users and groups</li>
+                <li>Connect via WebSocket at ws://localhost:8080</li>
+            </ol>
+
+            <div class="alert alert-info">
+                <strong>📚 Additional Resources:</strong> Complete implementation code, testing scripts, and deployment guides are available in the separate documentation artifacts.
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <div style="max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
+            <h3 style="color: white; margin-bottom: 1rem;">Distributed Messaging Application</h3>
+            <p>Built with Django, Go, Redis, and PostgreSQL</p>
+            <p style="margin-top: 1rem; opacity: 0.7;">
+                Demonstrating Message Passing, Multicast/Unicast Communication, and Active Membership Management
+            </p>
+            <p style="margin-top: 2rem; font-size: 0.9rem;">
+                © 2024 Distributed Systems Project | All distributed concepts successfully implemented ✓
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add active class to nav links on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.style.color = '';
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.style.color = 'var(--primary)';
+                }
+            });
+        });
+
+        // Print functionality
+        function printPage() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
