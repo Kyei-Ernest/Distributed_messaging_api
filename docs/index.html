@@ -289,34 +289,7 @@ go build -o ws-server
             
             <h3>High-Level Architecture</h3>
             <div class="architecture-ascii">
-┌────────────────────────────────────────────────────────────┐
-│                    Client Layer                          │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐             │
-│  │ Browser  │  │ Browser  │  │ Browser  │             │
-│  │ Client 1 │  │ Client 2 │  │ Client 3 │             │
-│  └────┬─────┘  └────┬─────┘  └────┬─────┘             │
-└───────┼────────────┼────────────┼───────────────────────┘
-        │ HTTP/WS     │ HTTP/WS     │ HTTP/WS
-        │             │             │
-┌───────▼────────────▼────────────▼───────────────────────┐
-│              Application Layer                          │
-│  ┌──────────────────┐      ┌─────────────────┐        │
-│  │   Django API     │◄────►│  Go WebSocket   │        │
-│  │   (Port 8000)    │      │  Server (8080)  │        │
-│  │                  │      │                 │        │
-│  │ • REST APIs      │      │ • WS Handler    │        │
-│  │ • Auth           │      │ • Active Users  │        │
-│  │ • Group Logic    │      │ • Message Route │        │
-│  └────────┬─────────┘      └────────┬────────┘        │
-└───────────┼────────────────────────┼───────────────────┘
-            │ Pub/Sub                  │ Pub/Sub
-┌───────────▼──────────────────────────▼───────────────────┐
-│                 Message Layer (Redis)                   │
-└──────────────────────┬───────────────────────────────────┘
-                      │
-┌─────────────────────▼────────────────────────────────────┐
-│                 Data Layer (PostgreSQL)                 │
-└──────────────────────────────────────────────────────────┘
+                <img src="system_architecture_1.png">
             </div>
 
             <div class="alert alert-info">
@@ -369,17 +342,17 @@ go build -o ws-server
 
             <h3>Message Flow</h3>
             <div class="architecture-ascii">
-1. Group Message (Multicast):
-   Client → Django API → Redis Pub/Sub → Go Server → All Group Members
+                    1. Group Message (Multicast):
+                    Client → Django API → Redis Pub/Sub → Go Server → All Group Members
 
-2. Private Message (Unicast):
-   Client → Django API → Redis Pub/Sub → Go Server → Specific Recipient
+                    2. Private Message (Unicast):
+                    Client → Django API → Redis Pub/Sub → Go Server → Specific Recipient
 
-3. Join Event:
-   WebSocket Connect → Go Server → Redis Pub/Sub → All Group Members
+                    3. Join Event:
+                    WebSocket Connect → Go Server → Redis Pub/Sub → All Group Members
 
-4. Leave Event:
-   WebSocket Disconnect → Go Server → Redis Pub/Sub → All Group Members
+                    4. Leave Event:
+                    WebSocket Disconnect → Go Server → Redis Pub/Sub → All Group Members
             </div>
         </section>
 
@@ -388,20 +361,7 @@ go build -o ws-server
             
             <h3>Authentication Flow</h3>
             <div class="architecture-ascii">
-Client                Django API              Database
-  │                      │                       │
-  │──Register/Login──────►│                       │
-  │                      │───Query User─────────►│
-  │                      │◄──User Data───────────│
-  │                      │                       │
-  │◄──JWT Token──────────│                       │
-  │                      │                       │
-  │──API Request─────────►│                       │
-  │  (Bearer Token)      │                       │
-  │                      │──Verify Token────────►│
-  │                      │◄──User Valid──────────│
-  │◄──Response───────────│                       │
-            </div>
+            <img src="flow.png">            </div>
 
             <h3>Authentication Endpoints</h3>
             <div class="table-wrapper">
@@ -603,53 +563,53 @@ Client                Django API              Database
             <h3>Event Payloads</h3>
 
             <h4>Group Message</h4>
-            <pre>{
-  "type": "group_message",
-  "data": {
-    "message_id": 123,
-    "group_id": 5,
-    "sender_id": 10,
-    "sender_username": "john_doe",
-    "content": "Hello everyone!",
-    "timestamp": "2025-01-15T10:30:00Z"
-  }
-}</pre>
+                        <pre>{
+            "type": "group_message",
+            "data": {
+                "message_id": 123,
+                "group_id": 5,
+                "sender_id": 10,
+                "sender_username": "john_doe",
+                "content": "Hello everyone!",
+                "timestamp": "2025-01-15T10:30:00Z"
+            }
+            }</pre>
 
-            <h4>Private Message</h4>
-            <pre>{
-  "type": "private_message",
-  "data": {
-    "message_id": 124,
-    "group_id": 5,
-    "sender_id": 10,
-    "sender_username": "john_doe",
-    "recipient_id": 15,
-    "content": "Hey there!",
-    "timestamp": "2025-01-15T10:31:00Z"
-  }
-}</pre>
+                        <h4>Private Message</h4>
+                        <pre>{
+            "type": "private_message",
+            "data": {
+                "message_id": 124,
+                "group_id": 5,
+                "sender_id": 10,
+                "sender_username": "john_doe",
+                "recipient_id": 15,
+                "content": "Hey there!",
+                "timestamp": "2025-01-15T10:31:00Z"
+            }
+            }</pre>
 
-            <h4>User Joined</h4>
-            <pre>{
-  "type": "user_joined",
-  "data": {
-    "user_id": 20,
-    "username": "jane_smith",
-    "group_id": 5,
-    "timestamp": "2025-01-15T10:32:00Z"
-  }
-}</pre>
+                        <h4>User Joined</h4>
+                        <pre>{
+            "type": "user_joined",
+            "data": {
+                "user_id": 20,
+                "username": "jane_smith",
+                "group_id": 5,
+                "timestamp": "2025-01-15T10:32:00Z"
+            }
+            }</pre>
 
-            <h4>User Left</h4>
-            <pre>{
-  "type": "user_left",
-  "data": {
-    "user_id": 20,
-    "username": "jane_smith",
-    "group_id": 5,
-    "timestamp": "2025-01-15T10:45:00Z"
-  }
-}</pre>
+                        <h4>User Left</h4>
+                        <pre>{
+            "type": "user_left",
+            "data": {
+                "user_id": 20,
+                "username": "jane_smith",
+                "group_id": 5,
+                "timestamp": "2025-01-15T10:45:00Z"
+            }
+            }</pre>
 
             <h3>Heartbeat Mechanism</h3>
             <p>To maintain active connections and detect disconnections:</p>
@@ -661,14 +621,14 @@ Client                Django API              Database
             </ul>
 
             <h3>Error Responses</h3>
-            <pre>{
-  "type": "error",
-  "data": {
-    "code": "AUTH_FAILED",
-    "message": "Invalid or expired token",
-    "timestamp": "2025-01-15T10:30:00Z"
-  }
-}</pre>
+                        <pre>{
+            "type": "error",
+            "data": {
+                "code": "AUTH_FAILED",
+                "message": "Invalid or expired token",
+                "timestamp": "2025-01-15T10:30:00Z"
+            }
+            }</pre>
 
             <h4>Error Codes</h4>
             <div class="table-wrapper">
@@ -720,22 +680,22 @@ Client                Django API              Database
                 
                 <p><strong>Request Body:</strong></p>
                 <pre>{
-  "username": "john_doe",
-  "email": "john@example.com",
-  "password": "SecurePass123!",
-  "first_name": "John",
-  "last_name": "Doe"
-}</pre>
+            "username": "john_doe",
+            "email": "john@example.com",
+            "password": "SecurePass123!",
+            "first_name": "John",
+            "last_name": "Doe"
+            }</pre>
 
-                <p><strong>Response (201 Created):</strong></p>
-                <pre>{
-  "id": 1,
-  "username": "john_doe",
-  "email": "john@example.com",
-  "first_name": "John",
-  "last_name": "Doe",
-  "created_at": "2025-01-15T10:00:00Z"
-}</pre>
+                            <p><strong>Response (201 Created):</strong></p>
+                            <pre>{
+            "id": 1,
+            "username": "john_doe",
+            "email": "john@example.com",
+            "first_name": "John",
+            "last_name": "Doe",
+            "created_at": "2025-01-15T10:00:00Z"
+            }</pre>
             </div>
 
             <div class="endpoint-box">
@@ -744,22 +704,22 @@ Client                Django API              Database
                 
                 <p><strong>Request Body:</strong></p>
                 <pre>{
-  "username": "john_doe",
-  "password": "SecurePass123!"
-}</pre>
+            "username": "john_doe",
+            "password": "SecurePass123!"
+            }</pre>
 
-                <p><strong>Response (200 OK):</strong></p>
-                <pre>{
-  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "token_type": "Bearer",
-  "expires_in": 86400,
-  "user": {
-    "id": 1,
-    "username": "john_doe",
-    "email": "john@example.com"
-  }
-}</pre>
+                            <p><strong>Response (200 OK):</strong></p>
+                            <pre>{
+            "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+            "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+            "token_type": "Bearer",
+            "expires_in": 86400,
+            "user": {
+                "id": 1,
+                "username": "john_doe",
+                "email": "john@example.com"
+            }
+            }</pre>
             </div>
 
             <h3>Group Endpoints</h3>
@@ -773,32 +733,32 @@ Client                Django API              Database
 
                 <p><strong>Response (200 OK):</strong></p>
                 <pre>{
-  "count": 2,
-  "results": [
-    {
-      "id": 1,
-      "name": "General Discussion",
-      "description": "Main chat room",
-      "created_by": {
-        "id": 1,
-        "username": "john_doe"
-      },
-      "member_count": 15,
-      "created_at": "2025-01-10T08:00:00Z"
-    },
-    {
-      "id": 2,
-      "name": "Tech Talk",
-      "description": "Technology discussions",
-      "created_by": {
-        "id": 2,
-        "username": "jane_smith"
-      },
-      "member_count": 8,
-      "created_at": "2025-01-12T14:30:00Z"
-    }
-  ]
-}</pre>
+            "count": 2,
+            "results": [
+                {
+                "id": 1,
+                "name": "General Discussion",
+                "description": "Main chat room",
+                "created_by": {
+                    "id": 1,
+                    "username": "john_doe"
+                },
+                "member_count": 15,
+                "created_at": "2025-01-10T08:00:00Z"
+                },
+                {
+                "id": 2,
+                "name": "Tech Talk",
+                "description": "Technology discussions",
+                "created_by": {
+                    "id": 2,
+                    "username": "jane_smith"
+                },
+                "member_count": 8,
+                "created_at": "2025-01-12T14:30:00Z"
+                }
+            ]
+            }</pre>
             </div>
 
             <div class="endpoint-box">
@@ -807,22 +767,22 @@ Client                Django API              Database
                 
                 <p><strong>Request Body:</strong></p>
                 <pre>{
-  "name": "Project Team",
-  "description": "Team collaboration space"
-}</pre>
+                "name": "Project Team",
+                "description": "Team collaboration space"
+                }</pre>
 
-                <p><strong>Response (201 Created):</strong></p>
-                <pre>{
-  "id": 3,
-  "name": "Project Team",
-  "description": "Team collaboration space",
-  "created_by": {
-    "id": 1,
-    "username": "john_doe"
-  },
-  "member_count": 1,
-  "created_at": "2025-01-15T10:00:00Z"
-}</pre>
+                                <p><strong>Response (201 Created):</strong></p>
+                                <pre>{
+                "id": 3,
+                "name": "Project Team",
+                "description": "Team collaboration space",
+                "created_by": {
+                    "id": 1,
+                    "username": "john_doe"
+                },
+                "member_count": 1,
+                "created_at": "2025-01-15T10:00:00Z"
+                }</pre>
             </div>
 
             <div class="endpoint-box">
