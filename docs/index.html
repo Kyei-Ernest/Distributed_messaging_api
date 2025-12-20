@@ -137,6 +137,7 @@
         .badge-success { background: var(--success); color: white; }
         .badge-primary { background: var(--primary); color: white; }
         .badge-warning { background: var(--warning); color: white; }
+        .badge-danger { background: var(--danger); color: white; }
 
         .card-grid {
             display: grid;
@@ -168,6 +169,15 @@
 
         code {
             font-family: 'Courier New', monospace;
+            background: var(--light);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            color: var(--danger);
+        }
+
+        pre code {
+            background: transparent;
+            color: #e2e8f0;
         }
 
         .diagram-container {
@@ -176,31 +186,31 @@
             border-radius: 8px;
             padding: 2rem;
             margin: 2rem 0;
-            text-align: center;
         }
 
         .diagram-placeholder {
             background: white;
             border: 2px dashed var(--border);
             border-radius: 8px;
-            padding: 4rem 2rem;
+            padding: 2rem;
             margin: 1rem 0;
-            color: var(--secondary);
             min-height: 300px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-        }
-
-        .diagram-placeholder p {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .diagram-placeholder small {
             color: var(--secondary);
-            opacity: 0.7;
+        }
+
+        .plantuml-code {
+            background: var(--code-bg);
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-size: 0.85rem;
+            font-family: 'Courier New', monospace;
+            white-space: pre;
         }
 
         .architecture-ascii {
@@ -270,6 +280,12 @@
             color: #92400e;
         }
 
+        .alert-danger {
+            background: #fee2e2;
+            border-color: var(--danger);
+            color: #991b1b;
+        }
+
         .feature-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -317,14 +333,75 @@
             margin-top: 4rem;
         }
 
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .nav-toggle {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: white;
+        }
+
+        .endpoint-box {
+            background: var(--light);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .method-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-right: 0.5rem;
+        }
+
+        .method-get { background: #10b981; color: white; }
+        .method-post { background: #3b82f6; color: white; }
+        .method-put { background: #f59e0b; color: white; }
+        .method-delete { background: #ef4444; color: white; }
+
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2rem;
             }
 
+            .nav-toggle {
+                display: block;
+            }
+
             .nav-links {
+                width: 100%;
+                display: none;
                 flex-direction: column;
-                gap: 1rem;
+                margin-top: 1rem;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-links li {
+                padding: 0.5rem 0;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+
+            h2 {
+                font-size: 1.6rem;
+            }
+
+            h3 {
+                font-size: 1.3rem;
+            }
+
+            section {
+                padding: 1.5rem 1rem;
             }
 
             .container {
@@ -335,123 +412,53 @@
                 grid-template-columns: 1fr;
             }
         }
+        
 
-        @media print {
-            nav, footer {
-                display: none;
+        /* ---------- Flexible Image Handling ---------- */
+        .diagram-container {
+            max-width: 100%;
+            overflow-x: auto;
+        }
+
+        .diagram-container img {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .diagram-container {
+                padding: 1rem;
             }
-            
-            section {
-                page-break-inside: avoid;
+
+            .diagram-container img {
+                max-height: 70vh;
             }
         }
 
-        .download-btn {
-            background: var(--success);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            text-decoration: none;
-            display: inline-block;
-            margin: 0.5rem;
-            transition: background 0.3s;
-        }
-
-        .download-btn:hover {
-            background: #059669;
-        }
-    
-/* ---------- Mobile Enhancements ---------- */
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-.table-wrapper {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-.nav-toggle {
-    display: none;
-    font-size: 1.8rem;
-    cursor: pointer;
-    color: white;
-}
-
-@media (max-width: 768px) {
-    .nav-toggle {
-        display: block;
-    }
-
-    .nav-links {
-        width: 100%;
-        display: none;
-        flex-direction: column;
-        margin-top: 1rem;
-    }
-
-    .nav-links.show {
-        display: flex;
-    }
-
-    .nav-links li {
-        padding: 0.5rem 0;
-        border-top: 1px solid rgba(255,255,255,0.1);
-    }
-
-    h2 {
-        font-size: 1.6rem;
-    }
-
-    h3 {
-        font-size: 1.3rem;
-    }
-
-    section {
-        padding: 1.5rem 1rem;
-    }
-}
-
-
-/* ---------- Flexible Image Handling ---------- */
-.diagram-container {
-    max-width: 100%;
-    overflow-x: auto;
-}
-
-.diagram-container img {
-    max-width: 100%;
-    height: auto;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto;
-}
-
-@media (max-width: 768px) {
-    .diagram-container {
-        padding: 1rem;
-    }
-
-    .diagram-container img {
-        max-height: 70vh;
-    }
-}
-
-</style>
+    </style>
 </head>
 <body>
     <nav>
         <div class="nav-container">
-            <div class="logo">📡 Distributed Messaging</div><div class="nav-toggle" id="navToggle">☰</div>
+            <div class="logo">📡 Distributed Messaging</div>
+            <div class="nav-toggle" id="navToggle">☰</div>
             <ul class="nav-links">
                 <li><a href="#overview">Overview</a></li>
+                <li><a href="#installation">Installation</a></li>
                 <li><a href="#architecture">Architecture</a></li>
+                <li><a href="#authentication">Authentication</a></li>
+                <li><a href="#websocket">WebSocket</a></li>
+                <li><a href="#api">API Reference</a></li>
+                <li><a href="#database">Database</a></li>
                 <li><a href="#diagrams">Diagrams</a></li>
-                <li><a href="#implementation">Implementation</a></li>
+                <li><a href="#examples">Examples</a></li>
                 <li><a href="#testing">Testing</a></li>
+                <li><a href="#errors">Errors</a></li>
+                <li><a href="#monitoring">Monitoring</a></li>
                 <li><a href="#deployment">Deployment</a></li>
-                <li><a href="#report">Report</a></li>
             </ul>
         </div>
     </nav>
@@ -511,25 +518,25 @@ img {
             <h3>Technology Stack</h3>
             <div class="card-grid">
                 <div class="card">
-                    <h4>Django (Python)</h4>
+                    <h4>Django (Python 3.9+)</h4>
                     <p><strong>Purpose:</strong> REST API, Authentication, Persistence</p>
                     <p><strong>Port:</strong> 8000</p>
                     <span class="badge badge-primary">Backend</span>
                 </div>
                 <div class="card">
-                    <h4>Go WebSocket Server</h4>
+                    <h4>Go 1.19+ WebSocket Server</h4>
                     <p><strong>Purpose:</strong> Real-time Communication, Message Routing</p>
                     <p><strong>Port:</strong> 8080</p>
                     <span class="badge badge-primary">Backend</span>
                 </div>
                 <div class="card">
-                    <h4>Redis Pub/Sub</h4>
+                    <h4>Redis 7.0+ Pub/Sub</h4>
                     <p><strong>Purpose:</strong> Message Broker, Inter-service Communication</p>
                     <p><strong>Port:</strong> 6379</p>
                     <span class="badge badge-warning">Infrastructure</span>
                 </div>
                 <div class="card">
-                    <h4>PostgreSQL</h4>
+                    <h4>PostgreSQL 14+</h4>
                     <p><strong>Purpose:</strong> Persistent Data Storage</p>
                     <p><strong>Port:</strong> 5432</p>
                     <span class="badge badge-warning">Infrastructure</span>
@@ -537,21 +544,196 @@ img {
             </div>
         </section>
 
+        <section id="installation">
+            <h2>🔧 Installation & Setup</h2>
+            
+            <h3>Prerequisites</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Software</th>
+                            <th>Version</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Docker</td>
+                            <td>20.10+</td>
+                            <td>Container runtime</td>
+                        </tr>
+                        <tr>
+                            <td>Docker Compose</td>
+                            <td>2.0+</td>
+                            <td>Multi-container orchestration</td>
+                        </tr>
+                        <tr>
+                            <td>Python</td>
+                            <td>3.9+</td>
+                            <td>Django backend (if running locally)</td>
+                        </tr>
+                        <tr>
+                            <td>Go</td>
+                            <td>1.19+</td>
+                            <td>WebSocket server (if running locally)</td>
+                        </tr>
+                        <tr>
+                            <td>Git</td>
+                            <td>2.30+</td>
+                            <td>Version control</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Quick Start with Docker (Recommended)</h3>
+            
+            <h4>Step 1: Clone Repository</h4>
+            <div class="command-box">git clone https://github.com/yourusername/distributed-messaging.git</div>
+            <div class="command-box">cd distributed-messaging</div>
+
+            <h4>Step 2: Environment Configuration</h4>
+            <p>Create a <code>.env</code> file in the project root:</p>
+            <pre>
+# Django Settings
+SECRET_KEY=your-secret-key-here-change-in-production
+DEBUG=True
+ALLOWED_HOSTS=localhost,127.0.0.1
+
+# Database
+DB_NAME=messaging_db
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_HOST=postgres
+DB_PORT=5432
+
+# Redis
+REDIS_HOST=redis
+REDIS_PORT=6379
+
+# WebSocket Server
+WS_SERVER_URL=ws://localhost:8080
+
+# CORS
+CORS_ALLOWED_ORIGINS=http://localhost:3000,http://localhost:8000
+
+# JWT Settings
+JWT_SECRET_KEY=your-jwt-secret-key-change-in-production
+JWT_EXPIRATION_HOURS=24
+</pre>
+
+            <h4>Step 3: Start Services</h4>
+            <div class="command-box">docker-compose up -d</div>
+            
+            <h4>Step 4: Run Migrations</h4>
+            <div class="command-box">docker-compose exec django python manage.py migrate</div>
+
+            <h4>Step 5: Create Superuser</h4>
+            <div class="command-box">docker-compose exec django python manage.py createsuperuser</div>
+
+            <h4>Step 6: Verify Services</h4>
+            <div class="command-box">docker-compose ps</div>
+
+            <div class="alert alert-success">
+                <strong>✓ Access Points:</strong>
+                <ul style="margin-top: 0.5rem; margin-left: 2rem;">
+                    <li>Django API: <a href="http://localhost:8000" target="_blank">http://localhost:8000</a></li>
+                    <li>Admin Panel: <a href="http://localhost:8000/admin" target="_blank">http://localhost:8000/admin</a></li>
+                    <li>WebSocket: ws://localhost:8080</li>
+                    <li>API Docs: <a href="http://localhost:8000/api/docs" target="_blank">http://localhost:8000/api/docs</a></li>
+                </ul>
+            </div>
+
+            <h3>Local Development Setup (Without Docker)</h3>
+
+            <h4>Backend (Django)</h4>
+            <pre>
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run migrations
+python manage.py migrate
+
+# Create superuser
+python manage.py createsuperuser
+
+# Start development server
+python manage.py runserver
+</pre>
+
+            <h4>WebSocket Server (Go)</h4>
+            <pre>
+# Navigate to Go server directory
+cd websocket-server
+
+# Install dependencies
+go mod download
+
+# Build and run
+go build -o ws-server
+./ws-server
+</pre>
+
+            <h3>Troubleshooting Common Issues</h3>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <h4>Port Already in Use</h4>
+                    <p><strong>Error:</strong> "Bind for 0.0.0.0:8000 failed: port is already allocated"</p>
+                    <p><strong>Solution:</strong></p>
+                    <div class="command-box">docker-compose down</div>
+                    <div class="command-box">lsof -ti:8000 | xargs kill -9</div>
+                </div>
+                <div class="card">
+                    <h4>Database Connection Failed</h4>
+                    <p><strong>Error:</strong> "Could not connect to database"</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>Verify PostgreSQL is running</li>
+                        <li>Check credentials in .env</li>
+                        <li>Wait 30s for DB to initialize</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Redis Connection Error</h4>
+                    <p><strong>Error:</strong> "Connection refused to Redis"</p>
+                    <p><strong>Solution:</strong></p>
+                    <div class="command-box">docker-compose restart redis</div>
+                    <p>Verify Redis is running on port 6379</p>
+                </div>
+                <div class="card">
+                    <h4>WebSocket Connection Failed</h4>
+                    <p><strong>Error:</strong> "WebSocket connection to 'ws://localhost:8080' failed"</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>Check Go server is running</li>
+                        <li>Verify JWT token is valid</li>
+                        <li>Check CORS configuration</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
         <section id="architecture">
-            <h2>🏗️ System Architecture</h2>
+            <h2>🗂️ System Architecture</h2>
             
             <h3>High-Level Architecture</h3>
             <div class="architecture-ascii">
-┌─────────────────────────────────────────────────────────┐
+┌────────────────────────────────────────────────────────────┐
 │                    Client Layer                          │
 │  ┌──────────┐  ┌──────────┐  ┌──────────┐             │
 │  │ Browser  │  │ Browser  │  │ Browser  │             │
 │  │ Client 1 │  │ Client 2 │  │ Client 3 │             │
 │  └────┬─────┘  └────┬─────┘  └────┬─────┘             │
-└───────┼─────────────┼─────────────┼───────────────────┘
+└───────┼────────────┼────────────┼───────────────────────┘
         │ HTTP/WS     │ HTTP/WS     │ HTTP/WS
         │             │             │
-┌───────▼─────────────▼─────────────▼───────────────────┐
+┌───────▼────────────▼────────────▼───────────────────────┐
 │              Application Layer                          │
 │  ┌──────────────────┐      ┌─────────────────┐        │
 │  │   Django API     │◄────►│  Go WebSocket   │        │
@@ -561,454 +743,980 @@ img {
 │  │ • Auth           │      │ • Active Users  │        │
 │  │ • Group Logic    │      │ • Message Route │        │
 │  └────────┬─────────┘      └────────┬────────┘        │
-└───────────┼──────────────────────────┼─────────────────┘
+└───────────┼────────────────────────┼───────────────────┘
             │ Pub/Sub                  │ Pub/Sub
-┌───────────▼──────────────────────────▼─────────────────┐
+┌───────────▼──────────────────────────▼───────────────────┐
 │                 Message Layer (Redis)                   │
-└─────────────────────┬───────────────────────────────────┘
+└──────────────────────┬───────────────────────────────────┘
                       │
-┌─────────────────────▼───────────────────────────────────┐
+┌─────────────────────▼────────────────────────────────────┐
 │                 Data Layer (PostgreSQL)                 │
-└─────────────────────────────────────────────────────────┘
+└──────────────────────────────────────────────────────────┘
             </div>
 
             <div class="alert alert-info">
                 <strong>Key Principle:</strong> No shared memory between services. All communication happens through explicit message passing via Redis Pub/Sub channels.
+            </div>
+
+            <h3>Component Responsibilities</h3>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <h4>Django REST API</h4>
+                    <ul>
+                        <li>User authentication & authorization</li>
+                        <li>Group CRUD operations</li>
+                        <li>Message persistence</li>
+                        <li>Business logic validation</li>
+                        <li>Publishing to Redis channels</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Go WebSocket Server</h4>
+                    <ul>
+                        <li>Maintaining WebSocket connections</li>
+                        <li>Tracking active users</li>
+                        <li>Routing real-time messages</li>
+                        <li>Join/leave event broadcasting</li>
+                        <li>Subscribing to Redis channels</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Redis Pub/Sub</h4>
+                    <ul>
+                        <li>Message broker between services</li>
+                        <li>Channel-based message routing</li>
+                        <li>Decoupling Django and Go</li>
+                        <li>Supporting horizontal scaling</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>PostgreSQL Database</h4>
+                    <ul>
+                        <li>User account storage</li>
+                        <li>Group metadata</li>
+                        <li>Message history</li>
+                        <li>Membership records</li>
+                        <li>ACID compliance</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Message Flow</h3>
+            <div class="architecture-ascii">
+1. Group Message (Multicast):
+   Client → Django API → Redis Pub/Sub → Go Server → All Group Members
+
+2. Private Message (Unicast):
+   Client → Django API → Redis Pub/Sub → Go Server → Specific Recipient
+
+3. Join Event:
+   WebSocket Connect → Go Server → Redis Pub/Sub → All Group Members
+
+4. Leave Event:
+   WebSocket Disconnect → Go Server → Redis Pub/Sub → All Group Members
+            </div>
+        </section>
+
+        <section id="authentication">
+            <h2>🔐 Authentication & Security</h2>
+            
+            <h3>Authentication Flow</h3>
+            <div class="architecture-ascii">
+Client                Django API              Database
+  │                      │                       │
+  │──Register/Login──────►│                       │
+  │                      │───Query User─────────►│
+  │                      │◄──User Data───────────│
+  │                      │                       │
+  │◄──JWT Token──────────│                       │
+  │                      │                       │
+  │──API Request─────────►│                       │
+  │  (Bearer Token)      │                       │
+  │                      │──Verify Token────────►│
+  │                      │◄──User Valid──────────│
+  │◄──Response───────────│                       │
+            </div>
+
+            <h3>Authentication Endpoints</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Endpoint</th>
+                            <th>Method</th>
+                            <th>Description</th>
+                            <th>Auth Required</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>/api/auth/register/</td>
+                            <td>POST</td>
+                            <td>Create new user account</td>
+                            <td><span class="badge badge-danger">No</span></td>
+                        </tr>
+                        <tr>
+                            <td>/api/auth/login/</td>
+                            <td>POST</td>
+                            <td>Authenticate and get token</td>
+                            <td><span class="badge badge-danger">No</span></td>
+                        </tr>
+                        <tr>
+                            <td>/api/auth/refresh/</td>
+                            <td>POST</td>
+                            <td>Refresh access token</td>
+                            <td><span class="badge badge-success">Yes</span></td>
+                        </tr>
+                        <tr>
+                            <td>/api/auth/logout/</td>
+                            <td>POST</td>
+                            <td>Invalidate token</td>
+                            <td><span class="badge badge-success">Yes</span></td>
+                        </tr>
+                        <tr>
+                            <td>/api/auth/me/</td>
+                            <td>GET</td>
+                            <td>Get current user info</td>
+                            <td><span class="badge badge-success">Yes</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Security Best Practices</h3>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <h4>Token Management</h4>
+                    <ul>
+                        <li>JWT tokens expire after 24 hours</li>
+                        <li>Refresh tokens valid for 7 days</li>
+                        <li>Store tokens securely (httpOnly cookies)</li>
+                        <li>Never expose tokens in URLs</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Password Security</h4>
+                    <ul>
+                        <li>Minimum 8 characters</li>
+                        <li>Bcrypt hashing (cost factor 12)</li>
+                        <li>No password in logs/responses</li>
+                        <li>Account lockout after 5 failed attempts</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>CORS Configuration</h4>
+                    <ul>
+                        <li>Whitelist specific origins</li>
+                        <li>Allow credentials: true</li>
+                        <li>Restrict methods to needed ones</li>
+                        <li>No wildcard (*) in production</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Rate Limiting</h4>
+                    <ul>
+                        <li>100 requests/minute per IP</li>
+                        <li>10 login attempts/hour</li>
+                        <li>50 messages/minute per user</li>
+                        <li>429 Too Many Requests response</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Authorization Levels</h3>
+            
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Action</th>
+                            <th>Required Permission</th>
+                            <th>Check</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Create Group</td>
+                            <td>Authenticated User</td>
+                            <td>Valid JWT token</td>
+                        </tr>
+                        <tr>
+                            <td>Send Group Message</td>
+                            <td>Group Member</td>
+                            <td>User in group.members</td>
+                        </tr>
+                        <tr>
+                            <td>Send Private Message</td>
+                            <td>Both in Same Group</td>
+                            <td>Sender & recipient share group</td>
+                        </tr>
+                        <tr>
+                            <td>Delete Group</td>
+                            <td>Group Creator</td>
+                            <td>User == group.created_by</td>
+                        </tr>
+                        <tr>
+                            <td>View Message History</td>
+                            <td>Group Member</td>
+                            <td>User in group.members</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="websocket">
+            <h2>🔌 WebSocket Protocol</h2>
+            
+            <h3>Connection Handshake</h3>
+            <p>Clients connect to the WebSocket server with authentication:</p>
+            <pre>ws://localhost:8080/ws?token=YOUR_JWT_TOKEN&user_id=123</pre>
+
+            <h3>Message Format</h3>
+            <p>All WebSocket messages use JSON format with the following structure:</p>
+            <pre>{
+  "type": "message_type",
+  "data": {
+    // Type-specific payload
+  },
+  "timestamp": "2025-01-15T10:30:00Z"
+}</pre>
+
+            <h3>Message Types</h3>
+            
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Direction</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>group_message</td>
+                            <td>Server → Client</td>
+                            <td>Message broadcast to all group members</td>
+                        </tr>
+                        <tr>
+                            <td>private_message</td>
+                            <td>Server → Client</td>
+                            <td>Direct message to specific user</td>
+                        </tr>
+                        <tr>
+                            <td>user_joined</td>
+                            <td>Server → Client</td>
+                            <td>User connected to group</td>
+                        </tr>
+                        <tr>
+                            <td>user_left</td>
+                            <td>Server → Client</td>
+                            <td>User disconnected from group</td>
+                        </tr>
+                        <tr>
+                            <td>ping</td>
+                            <td>Client ↔ Server</td>
+                            <td>Heartbeat to keep connection alive</td>
+                        </tr>
+                        <tr>
+                            <td>pong</td>
+                            <td>Client ↔ Server</td>
+                            <td>Response to ping</td>
+                        </tr>
+                        <tr>
+                            <td>error</td>
+                            <td>Server → Client</td>
+                            <td>Error notification</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Event Payloads</h3>
+
+            <h4>Group Message</h4>
+            <pre>{
+  "type": "group_message",
+  "data": {
+    "message_id": 123,
+    "group_id": 5,
+    "sender_id": 10,
+    "sender_username": "john_doe",
+    "content": "Hello everyone!",
+    "timestamp": "2025-01-15T10:30:00Z"
+  }
+}</pre>
+
+            <h4>Private Message</h4>
+            <pre>{
+  "type": "private_message",
+  "data": {
+    "message_id": 124,
+    "group_id": 5,
+    "sender_id": 10,
+    "sender_username": "john_doe",
+    "recipient_id": 15,
+    "content": "Hey there!",
+    "timestamp": "2025-01-15T10:31:00Z"
+  }
+}</pre>
+
+            <h4>User Joined</h4>
+            <pre>{
+  "type": "user_joined",
+  "data": {
+    "user_id": 20,
+    "username": "jane_smith",
+    "group_id": 5,
+    "timestamp": "2025-01-15T10:32:00Z"
+  }
+}</pre>
+
+            <h4>User Left</h4>
+            <pre>{
+  "type": "user_left",
+  "data": {
+    "user_id": 20,
+    "username": "jane_smith",
+    "group_id": 5,
+    "timestamp": "2025-01-15T10:45:00Z"
+  }
+}</pre>
+
+            <h3>Heartbeat Mechanism</h3>
+            <p>To maintain active connections and detect disconnections:</p>
+            <ul>
+                <li>Server sends <code>ping</code> every 30 seconds</li>
+                <li>Client must respond with <code>pong</code> within 10 seconds</li>
+                <li>Connection closed after 3 missed pongs</li>
+                <li>Client should reconnect on disconnect</li>
+            </ul>
+
+            <h3>Error Responses</h3>
+            <pre>{
+  "type": "error",
+  "data": {
+    "code": "AUTH_FAILED",
+    "message": "Invalid or expired token",
+    "timestamp": "2025-01-15T10:30:00Z"
+  }
+}</pre>
+
+            <h4>Error Codes</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>AUTH_FAILED</td>
+                            <td>Invalid or expired token</td>
+                            <td>Re-authenticate and reconnect</td>
+                        </tr>
+                        <tr>
+                            <td>RATE_LIMIT</td>
+                            <td>Too many messages</td>
+                            <td>Wait and retry</td>
+                        </tr>
+                        <tr>
+                            <td>INVALID_MESSAGE</td>
+                            <td>Malformed message</td>
+                            <td>Check message format</td>
+                        </tr>
+                        <tr>
+                            <td>NOT_AUTHORIZED</td>
+                            <td>No permission for action</td>
+                            <td>Verify group membership</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="api">
+            <h2>📚 API Reference</h2>
+            
+            <h3>Base URL</h3>
+            <div class="command-box">http://localhost:8000/api</div>
+
+            <h3>Authentication Endpoints</h3>
+
+            <div class="endpoint-box">
+                <h4><span class="method-badge method-post">POST</span> /auth/register/</h4>
+                <p>Register a new user account</p>
+                
+                <p><strong>Request Body:</strong></p>
+                <pre>{
+  "username": "john_doe",
+  "email": "john@example.com",
+  "password": "SecurePass123!",
+  "first_name": "John",
+  "last_name": "Doe"
+}</pre>
+
+                <p><strong>Response (201 Created):</strong></p>
+                <pre>{
+  "id": 1,
+  "username": "john_doe",
+  "email": "john@example.com",
+  "first_name": "John",
+  "last_name": "Doe",
+  "created_at": "2025-01-15T10:00:00Z"
+}</pre>
+            </div>
+
+            <div class="endpoint-box">
+                <h4><span class="method-badge method-post">POST</span> /auth/login/</h4>
+                <p>Authenticate user and receive JWT token</p>
+                
+                <p><strong>Request Body:</strong></p>
+                <pre>{
+  "username": "john_doe",
+  "password": "SecurePass123!"
+}</pre>
+
+                <p><strong>Response (200 OK):</strong></p>
+                <pre>{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "token_type": "Bearer",
+  "expires_in": 86400,
+  "user": {
+    "id": 1,
+    "username": "john_doe",
+    "email": "john@example.com"
+  }
+}</pre>
+            </div>
+
+            <h3>Group Endpoints</h3>
+
+            <div class="endpoint-box">
+                <h4><span class="method-badge method-get">GET</span> /groups/</h4>
+                <p>List all groups (user must be authenticated)</p>
+                
+                <p><strong>Headers:</strong></p>
+                <pre>Authorization: Bearer {access_token}</pre>
+
+                <p><strong>Response (200 OK):</strong></p>
+                <pre>{
+  "count": 2,
+  "results": [
+    {
+      "id": 1,
+      "name": "General Discussion",
+      "description": "Main chat room",
+      "created_by": {
+        "id": 1,
+        "username": "john_doe"
+      },
+      "member_count": 15,
+      "created_at": "2025-01-10T08:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Tech Talk",
+      "description": "Technology discussions",
+      "created_by": {
+        "id": 2,
+        "username": "jane_smith"
+      },
+      "member_count": 8,
+      "created_at": "2025-01-12T14:30:00Z"
+    }
+  ]
+}</pre>
+            </div>
+
+            <div class="endpoint-box">
+                <h4><span class="method-badge method-post">POST</span> /groups/</h4>
+                <p>Create a new group</p>
+                
+                <p><strong>Request Body:</strong></p>
+                <pre>{
+  "name": "Project Team",
+  "description": "Team collaboration space"
+}</pre>
+
+                <p><strong>Response (201 Created):</strong></p>
+                <pre>{
+  "id": 3,
+  "name": "Project Team",
+  "description": "Team collaboration space",
+  "created_by": {
+    "id": 1,
+    "username": "john_doe"
+  },
+  "member_count": 1,
+  "created_at": "2025-01-15T10:00:00Z"
+}</pre>
+            </div>
+
+            <div class="endpoint-box">
+                <h4><span class="method-badge method-post">POST</span> /groups/{id}/join/</h4>
+                <p>Join an existing group</p>
+                
+                <p><strong>Response (200 OK):</strong></p>
+                <pre>{
+  "message": "Successfully joined group",
+  "group": {
+    "id": 1,
+    "name": "General Discussion"
+  }
+}</pre>
+            </div>
+
+            <div class="endpoint-box">
+                <h4><span class="method-badge method-post">POST</span> /groups/{id}/leave/</h4>
+                <p>Leave a group</p>
+                
+                <p><strong>Response (200 OK):</strong></p>
+                <pre>{
+  "message": "Successfully left group"
+}</pre>
+            </div>
+
+            <div class="endpoint-box">
+                <h4><span class="method-badge method-get">GET</span> /groups/{id}/members/</h4>
+                <p>Get list of group members</p>
+                
+                <p><strong>Response (200 OK):</strong></p>
+                <pre>{
+  "count": 3,
+  "members": [
+    {
+      "id": 1,
+      "username": "john_doe",
+      "is_online": true,
+      "joined_at": "2025-01-10T08:00:00Z"
+    },
+    {
+      "id": 2,
+      "username": "jane_smith",
+      "is_online": false,
+      "joined_at": "2025-01-11T09:15:00Z"
+    }
+  ]
+}</pre>
+            </div>
+
+            <h3>Message Endpoints</h3>
+
+            <div class="endpoint-box">
+                <h4><span class="method-badge method-get">GET</span> /messages/?group={group_id}</h4>
+                <p>Get message history for a group</p>
+                
+                <p><strong>Query Parameters:</strong></p>
+                <ul>
+                    <li><code>group</code> - Group ID (required)</li>
+                    <li><code>limit</code> - Number of messages (default: 50)</li>
+                    <li><code>offset</code> - Pagination offset (default: 0)</li>
+                    <li><code>before</code> - Messages before timestamp</li>
+                </ul>
+
+                <p><strong>Response (200 OK):</strong></p>
+                <pre>{
+  "count": 100,
+  "next": "/api/messages/?group=1&offset=50",
+  "previous": null,
+  "results": [
+    {
+      "id": 150,
+      "group_id": 1,
+      "sender": {
+        "id": 1,
+        "username": "john_doe"
+      },
+      "message_type": "group",
+      "content": "Hello everyone!",
+      "created_at": "2025-01-15T10:30:00Z"
+    },
+    {
+      "id": 151,
+      "group_id": 1,
+      "sender": {
+        "id": 2,
+        "username": "jane_smith"
+      },
+      "recipient": {
+        "id": 1,
+        "username": "john_doe"
+      },
+      "message_type": "private",
+      "content": "Hey John!",
+      "created_at": "2025-01-15T10:31:00Z"
+    }
+  ]
+}</pre>
+            </div>
+
+            <div class="endpoint-box">
+                <h4><span class="method-badge method-post">POST</span> /messages/</h4>
+                <p>Send a new message</p>
+                
+                <p><strong>Request Body (Group Message):</strong></p>
+                <pre>{
+  "group": 1,
+  "message_type": "group",
+  "content": "Hello everyone!"
+}</pre>
+
+                <p><strong>Request Body (Private Message):</strong></p>
+                <pre>{
+  "group": 1,
+  "recipient": 5,
+  "message_type": "private",
+  "content": "Private message here"
+}</pre>
+
+                <p><strong>Response (201 Created):</strong></p>
+                <pre>{
+  "id": 152,
+  "group_id": 1,
+  "sender": {
+    "id": 1,
+    "username": "john_doe"
+  },
+  "message_type": "group",
+  "content": "Hello everyone!",
+  "created_at": "2025-01-15T10:35:00Z"
+}</pre>
+            </div>
+        </section>
+
+        <section id="database">
+            <h2>🗄️ Database Schema</h2>
+            
+            <h3>Entity Relationship Diagram</h3>
+            <div class="diagram-container">
+                <img src="img1.png" alt="">
+                
+                <details>
+                    <summary><strong>PlantUML Code for ERD</strong></summary>
+                    <div class="plantuml-code">@startuml
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+!define primary_key(x) <b>x</b>
+!define foreign_key(x) <i>x</i>
+
+hide methods
+hide stereotypes
+
+Table(users, "users") {
+  primary_key(id): INTEGER
+  username: VARCHAR(150)
+  email: VARCHAR(254)
+  password_hash: VARCHAR(128)
+  first_name: VARCHAR(30)
+  last_name: VARCHAR(150)
+  is_active: BOOLEAN
+  is_staff: BOOLEAN
+  date_joined: TIMESTAMP
+  last_login: TIMESTAMP
+}
+
+Table(groups, "groups") {
+  primary_key(id): INTEGER
+  name: VARCHAR(100)
+  description: TEXT
+  foreign_key(created_by): INTEGER
+  created_at: TIMESTAMP
+  updated_at: TIMESTAMP
+}
+
+Table(group_members, "group_members") {
+  primary_key(id): INTEGER
+  foreign_key(group_id): INTEGER
+  foreign_key(user_id): INTEGER
+  joined_at: TIMESTAMP
+  is_admin: BOOLEAN
+}
+
+Table(messages, "messages") {
+  primary_key(id): INTEGER
+  foreign_key(group_id): INTEGER
+  foreign_key(sender_id): INTEGER
+  foreign_key(recipient_id): INTEGER
+  message_type: VARCHAR(20)
+  content: TEXT
+  created_at: TIMESTAMP
+  is_deleted: BOOLEAN
+}
+
+Table(active_connections, "active_connections") {
+  primary_key(id): INTEGER
+  foreign_key(user_id): INTEGER
+  connection_id: VARCHAR(100)
+  connected_at: TIMESTAMP
+  last_ping: TIMESTAMP
+}
+
+users ||--o{ groups : "creates"
+users ||--o{ group_members : "belongs to"
+groups ||--o{ group_members : "has"
+users ||--o{ messages : "sends"
+messages }o--|| groups : "posted in"
+messages }o--o| users : "recipient"
+users ||--o{ active_connections : "has"
+
+@enduml</div>
+                </details>
+            </div>
+
+            <h3>Table Definitions</h3>
+
+            <h4>users</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Column</th>
+                            <th>Type</th>
+                            <th>Constraints</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>id</td>
+                            <td>INTEGER</td>
+                            <td>PRIMARY KEY, AUTO_INCREMENT</td>
+                            <td>Unique user identifier</td>
+                        </tr>
+                        <tr>
+                            <td>username</td>
+                            <td>VARCHAR(150)</td>
+                            <td>UNIQUE, NOT NULL</td>
+                            <td>User's login name</td>
+                        </tr>
+                        <tr>
+                            <td>email</td>
+                            <td>VARCHAR(254)</td>
+                            <td>UNIQUE, NOT NULL</td>
+                            <td>User's email address</td>
+                        </tr>
+                        <tr>
+                            <td>password_hash</td>
+                            <td>VARCHAR(128)</td>
+                            <td>NOT NULL</td>
+                            <td>Bcrypt hashed password</td>
+                        </tr>
+                        <tr>
+                            <td>first_name</td>
+                            <td>VARCHAR(30)</td>
+                            <td></td>
+                            <td>User's first name</td>
+                        </tr>
+                        <tr>
+                            <td>last_name</td>
+                            <td>VARCHAR(150)</td>
+                            <td></td>
+                            <td>User's last name</td>
+                        </tr>
+                        <tr>
+                            <td>is_active</td>
+                            <td>BOOLEAN</td>
+                            <td>DEFAULT TRUE</td>
+                            <td>Account active status</td>
+                        </tr>
+                        <tr>
+                            <td>date_joined</td>
+                            <td>TIMESTAMP</td>
+                            <td>DEFAULT CURRENT_TIMESTAMP</td>
+                            <td>Account creation date</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>groups</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Column</th>
+                            <th>Type</th>
+                            <th>Constraints</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>id</td>
+                            <td>INTEGER</td>
+                            <td>PRIMARY KEY, AUTO_INCREMENT</td>
+                            <td>Unique group identifier</td>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>VARCHAR(100)</td>
+                            <td>NOT NULL</td>
+                            <td>Group name</td>
+                        </tr>
+                        <tr>
+                            <td>description</td>
+                            <td>TEXT</td>
+                            <td></td>
+                            <td>Group description</td>
+                        </tr>
+                        <tr>
+                            <td>created_by</td>
+                            <td>INTEGER</td>
+                            <td>FOREIGN KEY (users.id)</td>
+                            <td>Creator user ID</td>
+                        </tr>
+                        <tr>
+                            <td>created_at</td>
+                            <td>TIMESTAMP</td>
+                            <td>DEFAULT CURRENT_TIMESTAMP</td>
+                            <td>Group creation date</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>messages</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Column</th>
+                            <th>Type</th>
+                            <th>Constraints</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>id</td>
+                            <td>INTEGER</td>
+                            <td>PRIMARY KEY, AUTO_INCREMENT</td>
+                            <td>Unique message identifier</td>
+                        </tr>
+                        <tr>
+                            <td>group_id</td>
+                            <td>INTEGER</td>
+                            <td>FOREIGN KEY (groups.id)</td>
+                            <td>Group where message was sent</td>
+                        </tr>
+                        <tr>
+                            <td>sender_id</td>
+                            <td>INTEGER</td>
+                            <td>FOREIGN KEY (users.id)</td>
+                            <td>Message sender</td>
+                        </tr>
+                        <tr>
+                            <td>recipient_id</td>
+                            <td>INTEGER</td>
+                            <td>FOREIGN KEY (users.id), NULL</td>
+                            <td>For private messages only</td>
+                        </tr>
+                        <tr>
+                            <td>message_type</td>
+                            <td>VARCHAR(20)</td>
+                            <td>CHECK IN ('group', 'private')</td>
+                            <td>Type of message</td>
+                        </tr>
+                        <tr>
+                            <td>content</td>
+                            <td>TEXT</td>
+                            <td>NOT NULL</td>
+                            <td>Message content</td>
+                        </tr>
+                        <tr>
+                            <td>created_at</td>
+                            <td>TIMESTAMP</td>
+                            <td>DEFAULT CURRENT_TIMESTAMP</td>
+                            <td>Message timestamp</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Database Indexes</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h4>Performance Indexes</h4>
+                    <pre>CREATE INDEX idx_messages_group 
+ON messages(group_id, created_at DESC);
+
+CREATE INDEX idx_messages_sender 
+ON messages(sender_id);
+
+CREATE INDEX idx_group_members 
+ON group_members(user_id, group_id);
+
+CREATE INDEX idx_active_connections 
+ON active_connections(user_id);</pre>
+                </div>
+                <div class="card">
+                    <h4>Index Usage</h4>
+                    <ul>
+                        <li><code>idx_messages_group</code>: Fast message history retrieval</li>
+                        <li><code>idx_messages_sender</code>: Quick sender lookups</li>
+                        <li><code>idx_group_members</code>: Membership checks</li>
+                        <li><code>idx_active_connections</code>: Online user detection</li>
+                    </ul>
+                </div>
             </div>
         </section>
 
         <section id="diagrams">
             <h2>📊 UML Diagrams</h2>
             
-            
-
             <h3>1. Class Diagram</h3>
             <div class="diagram-container">
                 <img src="uml1.png"></img>
-               
+                
+            
             </div>
 
             <h3>2. Use Case Diagram</h3>
             <div class="diagram-container">
                 <img src="usecase1.png"></img>
+                
             </div>
 
             <h3>3. Sequence Diagram: Group Message (Multicast)</h3>
             <div class="diagram-container">
                <img src="sequence_diagram1.png"></img>
+               
             </div>
 
             <h3>4. Sequence Diagram: Private Message (Unicast)</h3>
             <div class="diagram-container">
                 <img src="sequence_diagram2.png"></img>
+               
             </div>
 
             <h3>5. Sequence Diagram: Join Group</h3>
             <div class="diagram-container">
                 <img src="sequence_diagram3.png"></img>
+                
             </div>
 
             <h3>6. Sequence Diagram: Leave/Disconnect</h3>
             <div class="diagram-container">
                 <img src="sequence_diagram4.png"></img>
+                
             </div>
 
             <h3>7. Deployment Diagram</h3>
             <div class="diagram-container">
                  <img src="deployment_diagram1.png"></img>
+                 
             </div>
 
             <h3>8. Component Diagram</h3>
             <div class="diagram-container">
                                  <img src="component_diagram1.png"></img>
+                                
             </div>
         </section>
-
-        <section id="implementation">
-            <h2>💻 Implementation Guide</h2>
-            
-            <h3>Quick Start with Docker</h3>
-            <div class="command-box">docker-compose up -d</div>
-            <div class="command-box">docker-compose ps</div>
-            
-            <div class="alert alert-success">
-                <strong>✓ Access Points:</strong>
-                <ul style="margin-top: 0.5rem; margin-left: 2rem;">
-                    <li>Django API: <a href="http://localhost:8000" target="_blank">http://localhost:8000</a></li>
-                    <li>WebSocket: ws://localhost:8080</li>
-                    <li>Admin: <a href="http://localhost:8000/admin" target="_blank">http://localhost:8000/admin</a></li>
-                </ul>
-            </div>
-
-            <h3>API Endpoints</h3>
-            <div class="table-wrapper"><table>
-                <thead>
-                    <tr>
-                        <th>Endpoint</th>
-                        <th>Method</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>/api/groups/</td>
-                        <td>GET, POST</td>
-                        <td>List all groups or create new group</td>
-                    </tr>
-                    <tr>
-                        <td>/api/groups/{id}/join/</td>
-                        <td>POST</td>
-                        <td>Join a group</td>
-                    </tr>
-                    <tr>
-                        <td>/api/groups/{id}/leave/</td>
-                        <td>POST</td>
-                        <td>Leave a group</td>
-                    </tr>
-                    <tr>
-                        <td>/api/groups/{id}/members/</td>
-                        <td>GET</td>
-                        <td>List group members</td>
-                    </tr>
-                    <tr>
-                        <td>/api/messages/</td>
-                        <td>GET, POST</td>
-                        <td>List messages or send new message</td>
-                    </tr>
-                    <tr>
-                        <td>/api/messages/?group={id}</td>
-                        <td>GET</td>
-                        <td>Get message history for specific group</td>
-                    </tr>
-                </tbody>
-            </table></div>
-
-            <h3>Message Types</h3>
-            <div class="card-grid">
-                <div class="card">
-                    <h4>Group Message (Multicast)</h4>
-                    <pre style="font-size: 0.8rem;">{
-  "group": 1,
-  "message_type": "group",
-  "content": "Hello everyone!"
-}</pre>
-                    <p style="margin-top: 1rem;">Delivered to <strong>all</strong> online group members</p>
-                </div>
-                <div class="card">
-                    <h4>Private Message (Unicast)</h4>
-                    <pre style="font-size: 0.8rem;">{
-  "group": 1,
-  "recipient": 5,
-  "message_type": "private",
-  "content": "Private message"
-}</pre>
-                    <p style="margin-top: 1rem;">Delivered to <strong>specific recipient only</strong></p>
-                </div>
-            </div>
-        </section>
-
-        <section id="testing">
-            <h2>🧪 Testing</h2>
-            
-            <h3>Test Results Summary</h3>
-            <div class="table-wrapper"><table>
-                <thead>
-                    <tr>
-                        <th>Test Case</th>
-                        <th>Expected Result</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>User Registration</td>
-                        <td>User created in database</td>
-                        <td><span class="badge badge-success">✓ Pass</span></td>
-                    </tr>
-                    <tr>
-                        <td>Group Creation</td>
-                        <td>Group created, creator auto-joined</td>
-                        <td><span class="badge badge-success">✓ Pass</span></td>
-                    </tr>
-                    <tr>
-                        <td>Join Group</td>
-                        <td>Membership created, join event sent</td>
-                        <td><span class="badge badge-success">✓ Pass</span></td>
-                    </tr>
-                    <tr>
-                        <td>Send Group Message</td>
-                        <td>All members receive message</td>
-                        <td><span class="badge badge-success">✓ Pass</span></td>
-                    </tr>
-                    <tr>
-                        <td>Send Private Message</td>
-                        <td>Only recipient receives</td>
-                        <td><span class="badge badge-success">✓ Pass</span></td>
-                    </tr>
-                    <tr>
-                        <td>Leave Group</td>
-                        <td>Membership deleted, leave event sent</td>
-                        <td><span class="badge badge-success">✓ Pass</span></td>
-                    </tr>
-                    <tr>
-                        <td>WebSocket Reconnect</td>
-                        <td>User marked active again</td>
-                        <td><span class="badge badge-success">✓ Pass</span></td>
-                    </tr>
-                </tbody>
-            </table></div>
-
-            <h3>Distributed Concepts Verification</h3>
-            <div class="table-wrapper"><table>
-                <thead>
-                    <tr>
-                        <th>Concept</th>
-                        <th>Implementation</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Message Passing</td>
-                        <td>No shared memory, only network via Redis</td>
-                        <td><span class="badge badge-success">✓ Verified</span></td>
-                    </tr>
-                    <tr>
-                        <td>Multicast</td>
-                        <td>Group messages to all members</td>
-                        <td><span class="badge badge-success">✓ Verified</span></td>
-                    </tr>
-                    <tr>
-                        <td>Unicast</td>
-                        <td>Private messages to specific user</td>
-                        <td><span class="badge badge-success">✓ Verified</span></td>
-                    </tr>
-                    <tr>
-                        <td>Join Detection</td>
-                        <td>Real-time notification on connect</td>
-                        <td><span class="badge badge-success">✓ Verified</span></td>
-                    </tr>
-                    <tr>
-                        <td>Leave Detection</td>
-                        <td>Real-time notification on disconnect</td>
-                        <td><span class="badge badge-success">✓ Verified</span></td>
-                    </tr>
-                    <tr>
-                        <td>Message Logging</td>
-                        <td>All messages persisted in PostgreSQL</td>
-                        <td><span class="badge badge-success">✓ Verified</span></td>
-                    </tr>
-                </tbody>
-            </table></div>
-        </section>
-
-        <section id="deployment">
-            <h2>🚀 Deployment</h2>
-            
-            <h3>Production Deployment Steps</h3>
-            <ol>
-                <li>Set up environment variables</li>
-                <li>Configure Nginx as reverse proxy</li>
-                <li>Set up SSL/TLS certificates</li>
-                <li>Configure systemd services</li>
-                <li>Set up database backups</li>
-                <li>Configure monitoring and logging</li>
-            </ol>
-
-            <h3>System Requirements</h3>
-            <div class="card-grid">
-                <div class="card">
-                    <h4>Minimum</h4>
-                    <ul>
-                        <li>2 CPU cores</li>
-                        <li>4 GB RAM</li>
-                        <li>20 GB storage</li>
-                        <li>Ubuntu 20.04+</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h4>Recommended</h4>
-                    <ul>
-                        <li>4+ CPU cores</li>
-                        <li>8+ GB RAM</li>
-                        <li>50+ GB SSD</li>
-                        <li>Ubuntu 22.04 LTS</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section id="report">
-            <h2>📄 Project Report</h2>
-            
-            <h3>Executive Summary</h3>
-            <p>This project successfully implements a distributed messaging application that demonstrates key distributed systems concepts including message passing, multicast/unicast communication, active membership management, and reliability features.</p>
-
-            <h3>Core Requirements Met</h3>
-            <div class="table-wrapper"><table>
-                <thead>
-                    <tr>
-                        <th>Requirement</th>
-                        <th>Implementation</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1. Group Management</td>
-                        <td>Create, join, leave groups with active member tracking</td>
-                        <td><span class="badge badge-success">✓ Complete</span></td>
-                    </tr>
-                    <tr>
-                        <td>2. Group Communication</td>
-                        <td>Multicast messages to all online group members</td>
-                        <td><span class="badge badge-success">✓ Complete</span></td>
-                    </tr>
-                    <tr>
-                        <td>3. Private Messaging</td>
-                        <td>Unicast messages to specific recipients</td>
-                        <td><span class="badge badge-success">✓ Complete</span></td>
-                    </tr>
-                    <tr>
-                        <td>4. Distributed Operation</td>
-                        <td>4 separate nodes, message passing via Redis</td>
-                        <td><span class="badge badge-success">✓ Complete</span></td>
-                    </tr>
-                    <tr>
-                        <td>5. Reliability Features</td>
-                        <td>Join/leave detection + message logging</td>
-                        <td><span class="badge badge-success">✓ Complete</span></td>
-                    </tr>
-                    <tr>
-                        <td>6. Interface</td>
-                        <td>Web-based interface with REST API + WebSockets</td>
-                        <td><span class="badge badge-success">✓ Complete</span></td>
-                    </tr>
-                </tbody>
-            </table></div>
-
-            <h3>Distributed Concepts Demonstrated</h3>
-            
-            <h4>1. Message Passing (No Shared Memory)</h4>
-            <ul>
-                <li>Django and Go run as separate processes</li>
-                <li>Communication only through Redis Pub/Sub</li>
-                <li>Network-based message exchange</li>
-                <li>Services can be deployed on different machines</li>
-            </ul>
-
-            <h4>2. Multicast Communication</h4>
-            <ul>
-                <li>Single message sent to group channel</li>
-                <li>All online members receive simultaneously</li>
-                <li>Go server routes to all active WebSocket connections</li>
-            </ul>
-
-            <h4>3. Unicast Communication</h4>
-            <ul>
-                <li>Private messages target specific user ID</li>
-                <li>Django validates membership</li>
-                <li>Only recipient's WebSocket receives message</li>
-            </ul>
-
-            <h4>4. Active Membership Management</h4>
-            <ul>
-                <li>Go tracks WebSocket connections in real-time</li>
-                <li>Automatic join/leave event broadcasting</li>
-                <li>Online member list updated dynamically</li>
-            </ul>
-
-            <h3>Limitations and Future Improvements</h3>
-            
-            <h4>Current Limitations</h4>
-            <ul>
-                <li>Single Go server limits scalability (~10K connections)</li>
-                <li>No message ordering guarantees across clients</li>
-                <li>No end-to-end encryption</li>
-                <li>Limited fault tolerance</li>
-            </ul>
-
-            <h4>Future Enhancements</h4>
-            <ul>
-                <li>Horizontal scaling with multiple Go servers</li>
-                <li>Message acknowledgments and delivery receipts</li>
-                <li>End-to-end encryption using Signal Protocol</li>
-                <li>File sharing capabilities</li>
-                <li>Voice/video calls using WebRTC</li>
-                <li>Mobile applications</li>
-            </ul>
-
-            <h3>Conclusion</h3>
-            <p>The system successfully demonstrates all required distributed systems concepts through a practical, production-ready messaging application. The modular architecture allows independent scaling and upgrading of components while maintaining clear separation of concerns.</p>
-
-            <div class="alert alert-success">
-                <strong>✓ Project Status:</strong> All core requirements met. System tested and ready for deployment.
-            </div>
-        </section>
-
-       
-    </div>
-
-    <footer>
-        <div style="max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
-            <h3 style="color: white; margin-bottom: 1rem;">Distributed Messaging Application</h3>
-            <p>Built with Django, Go, Redis, and PostgreSQL</p>
-            <p style="margin-top: 1rem; opacity: 0.7;">
-                Demonstrating Message Passing, Multicast/Unicast Communication, and Active Membership Management
-            </p>
-            <p style="margin-top: 2rem; font-size: 0.9rem;">
-                © 2024 Distributed Systems Project | All distributed concepts successfully implemented ✓
-            </p>
-        </div>
-    </footer>
-
-    <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Add active class to nav links on scroll
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.nav-links a');
-            
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (scrollY >= sectionTop - 100) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.style.color = '';
-                if (link.getAttribute('href').substring(1) === current) {
-                    link.style.color = 'var(--primary)';
-                }
-            });
-        });
-
-        // Print functionality
-        function printPage() {
-            window.print();
-        }
-    </script>
-
-<script>
-document.getElementById('navToggle').addEventListener('click', () => {
-    document.querySelector('.nav-links').classList.toggle('show');
-});
-</script>
-
-</body>
-</html>
