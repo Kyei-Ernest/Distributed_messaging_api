@@ -220,7 +220,7 @@
             socket.close();
         }
 
-        const wsUrl = `ws://localhost:8000/ws/groups/${groupId}/?token=${accessToken}`;
+        const wsUrl = `ws://postumbonal-monatomic-cecelia.ngrok-free.dev/ws/groups/${groupId}/?token=${accessToken}`;
         socket = new WebSocket(wsUrl);
 
         document.getElementById('status').textContent = 'Connecting...';
